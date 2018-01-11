@@ -1,16 +1,32 @@
 /* CSS Document */
-body {
-	background-color: hsla(0,0%,14%,1.00);
-}
+
 
 header {
-	background-color: #1F64DD;
+	background-color: #9c988e;
 	text-align: center;
+	display:inline-grid;
+	width: 75%;
+	margin-left:12.5%;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	padding: 6px;
 }
 
 h1 {
 	margin: 0;
-	color: white;
+	color: #ffde7e;
+	font-family: 'Comfortaa', cursive;
+	font-size: 100px;
+}
+
+h2 {
+	font-family: 'Lora', bold, serif;
+	font-size: 30px;
+}
+
+p {
+	font-family: 'Montserrat', sans-serif;
+	text-align: center;
 }
 
 section {
