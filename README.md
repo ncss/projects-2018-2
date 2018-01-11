@@ -5,5 +5,6 @@ Team members:
 * Jackson
 * Alex H
 * Chris
+* Tom
 * ???
 * Shovel Q
