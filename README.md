@@ -11,3 +11,4 @@ Team members:
 * Shovel Q (aka Constantine)
 * Ollie (aka starfire)
 * Ethan (aka Aquaman)
+* Frau (aka Dora)
