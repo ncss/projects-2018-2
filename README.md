@@ -8,3 +8,4 @@ Team members:
 * Tom
 * ???
 * Shovel Q
+*Karina
