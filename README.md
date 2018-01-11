@@ -3,5 +3,6 @@
 
 Team members:
 * Jackson
+* Alex H
 * Chris
 * ???
