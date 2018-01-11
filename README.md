@@ -2,10 +2,11 @@
 ## Group 2
 
 Team members:
-* Jackson
-* Alex H
-* Chris
-* Tom
+* Jackson (aka Superman)
+* Alex H (aka Deadman)
+* Chris (aka Green Lantern)
+* Tom (aka Flash)
 * ???
-* Shovel Q
+* Shovel Q (aka Constantine)
 * Ollie (aka starfire)
+* Ethan (aka Aquaman)
