@@ -19,6 +19,7 @@ def swipe_screen_handler(request, profile_id, swipe_direction):
 
 server = Server()
 server.register(r"/charity_profile/(\d+)/", charity_profile_handler)
+server.register(r"/create_profile/", create_profile_handler)
 server.register(r"/post_create_profile/(.+)/(.+)", post_create_profile_handler)
 server.register(r"/swipe/(\d+)/(left|right)", swipe_screen_handler)
 server.run()
