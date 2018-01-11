@@ -1,0 +1,28 @@
+/* CSS Document */
+body {
+	background-color: hsla(0,0%,14%,1.00);
+}
+
+header {
+	background-color: #1F64DD;
+	text-align: center;
+}
+
+h1 {
+	margin: 0;
+	color: white;
+}
+
+section {
+	background-color: lightblue;
+	display:inline-grid;
+	width: 75%;
+	margin-left:12.5%;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	padding: 6px;
+}
+
+h1,h2,h3 {
+	text-align: center;
+}
