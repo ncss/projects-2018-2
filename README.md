@@ -7,8 +7,9 @@ Team members:
 * Chris (aka Green Lantern)
 * Tom (aka Flash)
 * Rachel (aka Wonder Woman)
-* ???
+* ??? (???)
 * Shovel Q (aka Constantine)
 * Ollie (aka starfire)
 * Ethan (aka Aquaman)
 * Frau (aka Dora)
+* Thomas (The Flash)
