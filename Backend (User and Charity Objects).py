@@ -18,7 +18,7 @@ class Charity:
 		self._name = charityName
 		self._story = story
 		self._websiteURL = websiteURL
-	
+
 	def updateLogo(self, logoURL):
 		if logoURL is '' or logoURL is None:
 			return False
@@ -31,14 +31,15 @@ class Charity:
 		Database goes here
 		'''
 		return name, story, webURL
-	
+
 	def post(self, title, content):
 		_upload(title, content)
 
 	def _upload(self, title, content):
 		''' something goes here'''
+		pass
 
-		
+	
 class User:
 
 	def __init__(self, username, password, fname, sname, email):
@@ -63,7 +64,7 @@ class User:
 			return True
 		else:
 			return False
-	
+
 	def removeFriend(self, username):
 		'''
 		This function removes a friend from the person's friends list
@@ -86,7 +87,7 @@ class User:
 		else:
 			return False
 
-	
+
 	def controlsCharity(self, charity):
 		if self._charity == charity.lower():
 			return True
@@ -96,12 +97,14 @@ class User:
 		'''
 		Database
 		'''
+		pass
 		
 	def unfollow(self, charity):
 		'''
 		Database
 		'''
-		
+		pass
+
 	def hasDonated(self, charity):
 		'''
 		if user has donated to charity:
@@ -109,15 +112,17 @@ class User:
 		else:
 		return False
 		'''
-	
+		pass
+
 	def blockUser(self, username):
 		'''
 		block
 		'''
-		
+		pass
 	
+
 class Post:
-	
+
 	def __init__(self, title, content, user):
 		self._title = title
 		self._content = content
@@ -127,42 +132,42 @@ class Post:
 	def getPostContent(self):
 		return self._title, self._content, self._user, self._timestamp
 
-	
+
 
 def getTime(self):
-  	ts = time.time()
-  	date = datetime.datetime.fromtimestamp(ts).strftime('%d:%m')
-  	formattedDate = date.split(":")
- 	if formattedDate[0].endswith("1") and not formattedDate[0].startswith("1"):
+	ts = time.time()
+	date = datetime.datetime.fromtimestamp(ts).strftime('%d:%m')
+	formattedDate = date.split(":")
+	if formattedDate[0].endswith("1") and not formattedDate[0].startswith("1"):
 		formattedDate[0] += 'st'
 	elif formattedDate[0].endswith("2") and not formattedDate[0].startswith("1"):
- 	   	formattedDate[0] += 'nd'
- 	elif formattedDate[0].endswith("3") and not formattedDate[0].startswith("1"):
-    	formattedDate[0] += 'rd'
-  	else:
-    	formattedDate[0] += 'th'
-  
-  
- 	months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  	if int(formattedDate[1])-1 not in range(12):
-    	raise SyntaxError
-  	else:
-    	formattedDate[1] = months[int(formattedDate[1])-1]
-  	date = ' '.join(formattedDate)
-  
-  	clock = datetime.datetime.fromtimestamp(ts).strftime('%H:%M')
-  
-  	formattedClock = clock.split(":")
-  	return (date, clock,)
+		formattedDate[0] += 'nd'
+	elif formattedDate[0].endswith("3") and not formattedDate[0].startswith("1"):
+		formattedDate[0] += 'rd'
+	else:
+		formattedDate[0] += 'th'
 
+
+	months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+	if int(formattedDate[1])-1 not in range(12): raise SyntaxError
+	else: formattedDate[1] = months[int(formattedDate[1])-1]
+	date = ' '.join(formattedDate)
+
+	clock = datetime.datetime.fromtimestamp(ts).strftime('%H:%M')
+
+	formattedClock = clock.split(":")
+	return (date, clock,)
+
+'''
 def validateURL(url):
-	regex = re.compile(
-        r'^(?:http|ftp)s?://' # http:// or https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
-        r'localhost|' #localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
-        r'(?::\d+)?' # optional port
-        r'(?:/?|[/?]\S+)$', re.I)
-    if re.match(regex, url) is not None:
-      	return True
-    return False
+regex = re.compile(
+    r'^(?:http|ftp)s?://' # http:// or https://
+    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
+    r'localhost|' #localhost...
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+    r'(?::\d+)?' # optional port
+    r'(?:/?|[/?]\S+)$', re.I)
+if re.match(regex, url) is not None:
+  	return True
+return False
+'''
