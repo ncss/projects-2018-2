@@ -6,22 +6,22 @@ class Node:
         self._string = string
 
 class GroupNode(Node):
-    """Creates a GroupNode which contains more Nodes"""
+    """A GroupNode contains more Nodes"""
     def __init__(self,nodeList):
         self._nL = nodeList
     def translate(self):
         final = ''
-        for node in nodeList:
+        for node in self._nL:
             final += node.translate()
         return final
 
 class TextNode(Node):
     """Creates a TextNode which contains nothing to edit"""
     def translate(self):
-        return self
+        return self._string
 
 class ExprNode(Node):
     """Creates an Expression Node which contains python code to evaluate"""
     def translate(self):
-        return eval(self[2:-2])
+        return eval(self._string[2:-2]) #MAY NEED CHANGE BASED ON SYNTAX
 
