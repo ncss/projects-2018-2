@@ -1,0 +1,82 @@
+/* CSS Document */
+body {
+	background-color: hsla(0,0%,14%,1.00);
+}
+
+.hamburger {
+	width: 100px;
+	height: 100px;
+	float: right;
+	background: skyblue;
+	border-bottom: 2px blue solid;
+	border-left: 2px blue solid;
+	border-bottom-left-radius: 10px;
+	margin: 0;
+}
+
+.hamburger:hover {
+	background: blue;
+}
+
+header {
+	background-color: #1F64DD;
+	text-align: center;
+	width: 75%;
+	margin-left:12.5%;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	padding: 0;
+}
+
+h1 {
+	margin: 0;
+	color: #ffde7e;
+	font-family: 'Comfortaa', cursive;
+	font-size: 100px;
+}
+h2 {
+	font-family: 'Lora', bold, serif;
+	font-size: 30px;
+}
+
+section {
+	background-color: lightblue;
+	display:inline-grid;
+	width: 75%;
+	margin-left:12.5%;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	padding: 0;
+	padding-top: 5px;
+}
+
+p {
+	font-family: 'Montserrat', sans-serif;
+	text-align: center;
+	margin:0;
+}
+
+h1,h2,h3 {
+	text-align: center;
+}
+
+.icon {
+	width: 500px;
+	height: 500px;
+}
+
+.center {
+	text-align: center;
+	font-size: 200px;
+	padding: 0;
+	margin: 0;
+}
+
+article {
+	background-color: skyblue;
+	border: 2px solid aqua;
+}
+
+.white {
+	color: white;
+}
