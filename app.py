@@ -1,10 +1,18 @@
+import os
 from tornado.ncss import Server, ncssbook_log
 
+TEMPLATE_DIR = "templates"
+
+def get_template(filename):
+    with open(os.path.join(TEMPLATE_DIR, filename)) as f:
+        return f.read()
+
 def home_page_handler(request):
-    request.write(open("style_guide/index.html").read())
+    request.write(get_template("index.html"))
 
 def charity_profile_handler(request, charity_profile_id):
-    request.write("Here is the profile for charity " + charity_profile_id + ".")
+    #request.write("Here is the profile for charity " + charity_profile_id + ".")
+    request.write(get_template("charity.html").format(charity_profile_id = charity_profile_id))
 
 def create_charity_profile_handler(request):
     pass
@@ -14,19 +22,19 @@ def post_create_profile_handler(request, charity_name, charity_logo):
     request.write("You have added a Charity with this name " + charity_name + " and logo " + charity_logo)
 
 def feed_handler(request):
-    request.write("Welcome to your feed!")
+    request.write(get_template("feed.html"))
 
 def swipe_screen_handler(request, charity_profile_id, swipe_direction):
     request.write("You swiped " + swipe_direction + " for the Charity " + charity_profile_id)
 
 def about_handler(request):
-    request.write("This is the 'About' page")
+    request.write(get_template("about.html"))
 
 def user_profile_handler(request, user_profile_id, user_profile_name):
-    request.write("Here is " + user_profile_id + " aka " + user_profile_name)
-
+    #request.write("Here is " + user_profile_id + " aka " + user_profile_name)
+    request.write(get_template("user.html").format(user_profile_id = user_profile_id, user_profile_name = user_profile_name))
 def default_handler(request, method):
-    request.write("Hello")
+    request.write("Invaild url silly!")
     """Redirects all invalid urls to this"""
 
 """def next_charity_handler(request, )"""
