@@ -31,8 +31,20 @@ class TextNode(Node):
 class ExprNode(Node):
     """Creates an Expression Node which contains python code to evaluate"""
     def translate(self,context):
-        return eval(self._string,context) #MAY NEED CHANGE BASED ON SYNTAX
+        return str(eval(self._string,context))
+class IfNode(Node):
+    """An IfNode contains a statement and the required node"""
+    def __init__(self,condition,statement):
+        self._cond = eval(condition)
+        self._stat = statement
+    def translate(self,context):
+        if self._cond:
+            return statement.translate(context)
+        else:
+            return ''
 
+
+        
 
 if __name__ == '__main__':
     import doctest
