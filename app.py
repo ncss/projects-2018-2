@@ -11,9 +11,10 @@ def get_template(filename):
 
 def home_page_handler(request):
     #charity = backend_objects.getRandomCharity()
-    charity = backend_objects.Charity("Snail Helpline", "We help snails!!")
+    charity = backend_objects.Charity("Snail Helpline", "We help snails!!", logoURL = "snail.jpg")
     context = {"charity": charity}
     request.write(templater.render("templates/index.html", context))
+
 
 def charity_profile_handler(request, charity_profile_id):
     #request.write("Here is the profile for charity " + charity_profile_id + ".")
