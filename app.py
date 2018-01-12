@@ -16,6 +16,10 @@ def post_create_profile_handler(request, charity_name, charity_logo):
 def swipe_screen_handler(request, profile_id, swipe_direction):
 	request.write("You swiped " + swipe_direction + " for the Charity " + profile_id)
 
+def default_handler(request, method):
+	request.write("Hello")
+	"""Redirects all invalid urls to this"""
+
 """def next_charity_handler(request, )"""
 """ Sends user to new page and sends info to data base"""
 
@@ -25,4 +29,5 @@ server.register(r"/charity_profile/(\d+)/", charity_profile_handler)
 server.register(r"/create_charity_profile/", create_charity_profile_handler)
 server.register(r"/post_create_profile/(.+)/(.+)", post_create_profile_handler)
 server.register(r"/swipe/(\d+)/(left|right)", swipe_screen_handler)
+server.set_default_handler(default_handler)
 server.run()
