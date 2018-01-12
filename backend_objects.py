@@ -4,7 +4,7 @@ import datetime, time
 import sqlite3, os
 #import db
 import random
-
+from db import call_query
 
 
 
@@ -47,6 +47,16 @@ class Charity:
         #webURL = info[]
 
         return (name, story, webURL, logoURL,)
+
+    @staticmethod
+    def get(ID):
+        results = call_query('''SELECT name,story,charity_website_url,image_src
+        FROM charity
+        WHERE id = ?
+        ''',(ID,))
+        results = results[0]
+        c = Charity(results[0],results[1],results[2],results[3])
+        return c
 
     def post(self, title, content):
         _upload(title, content)
