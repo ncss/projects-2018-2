@@ -15,7 +15,11 @@ Syntax:
 
 """
 
-from templater.node_parser import *
+# Relative imports are hard...
+try:
+    from node_parser import *
+except ImportError:
+    from templater.node_parser import *
 
 def render(file,context):
     '''Renders given html file'''
