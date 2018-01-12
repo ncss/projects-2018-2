@@ -4,7 +4,8 @@ def charity_profile_handler(request, profile_id):
 	request.write("Here is the profile for charity " + profile_id + ".")
 	
 def create_profile_handler(request):
-	
+	pass
+	"""Wanting to do something here but not sure what yet."""
 def post_create_profile_handler(request, charity_name, charity_logo):
 	request.write("You have added a Charity with this name " + charity_name + " and logo " + charity_logo)
 	
