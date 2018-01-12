@@ -15,3 +15,4 @@ Team members:
 * Thomas (The Flash)
 * Sara
 * Breanna (aka Black Panther)
+*Ella (aka Posion Ivy)
