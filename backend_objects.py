@@ -168,6 +168,16 @@ class User:
         block
         '''
         pass
+
+    @staticmethod
+    def get(ID):
+        results = call_query('''SELECT username,pword,fname,sname,email
+        FROM users
+        WHERE id = ?
+        ''',(ID,))
+        results = results[0]
+        c = User(results[0],results[1],results[2],results[3],results[4])
+        return c
     
 
 class Post:
