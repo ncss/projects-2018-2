@@ -17,3 +17,4 @@ Team members:
 * Leanne (aka Leeanng)
 * Breanna (aka Black Panther)
 * Ella (aka Posion Ivy)
+* Julia (aka Batman)
