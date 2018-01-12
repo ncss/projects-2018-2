@@ -1,6 +1,6 @@
 /* CSS Document */
 body {
-	background-color: hsla(0,0%,14%,1.00);
+	background-color: white;
 }
 
 .hamburger {
@@ -21,8 +21,8 @@ body {
 header {
 	background-color: #1F64DD;
 	text-align: center;
-	width: 75%;
-	margin-left:12.5%;
+	width: 85%;
+	margin-left:7.5%;
 	margin-bottom: 5px;
 	margin-top: 5px;
 	padding: 0;
@@ -36,14 +36,14 @@ h1 {
 }
 h2 {
 	font-family: 'Lora', bold, serif;
-	font-size: 30px;
+	font-size: 40px;
 }
 
 section {
 	background-color: lightblue;
 	display:inline-grid;
-	width: 75%;
-	margin-left:12.5%;
+	width: 85%;
+	margin-left:7.5%;
 	margin-bottom: 5px;
 	margin-top: 5px;
 	padding: 0;
@@ -53,7 +53,8 @@ section {
 p {
 	font-family: 'Montserrat', sans-serif;
 	text-align: center;
-	margin:0;
+	font-size: 20px;
+	margin:5px;
 }
 
 h1,h2,h3 {
@@ -61,13 +62,14 @@ h1,h2,h3 {
 }
 
 .icon {
-	width: 500px;
-	height: 500px;
+	width: 40%;
+	margin: 90px;
+	margin-top: 40px;
 }
 
 .center {
 	text-align: center;
-	font-size: 200px;
+	font-size: 100px;
 	padding: 0;
 	margin: 0;
 }
@@ -75,8 +77,13 @@ h1,h2,h3 {
 article {
 	background-color: skyblue;
 	border: 2px solid aqua;
+	margin: 15px;
 }
 
 .white {
 	color: white;
+}
+
+a {
+	text-decoration: none;
 }
