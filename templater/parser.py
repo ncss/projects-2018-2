@@ -1,26 +1,7 @@
 #look for all tags (end and star ones) 
 #text, python expr
 import re
-text = """
-{% include header.html %}
-<section id='profile'>
-<h1>{{ person.name }}</h1>
-<ul id='friends-list'>
-{% for f in person.friends %}
-<li class='friend'>
-{{ f.name.title() }} {{ f.age }} {% if f.has_nickname() %} ({{ f.nickname }}) {% end if %}
-</li>
-{% end for %}
-</ul>
-</section>
-{% include footer.html %}
-"""
-
-##tokens = []
-##for i in text.split():
-##  i = re.split(r'({{.+?}})', text)
-##  if i[:2] == "{{":
-##    tokens.append(i)  	
+import node
 
 def tokenise(text):
   """
@@ -33,8 +14,17 @@ def tokenise(text):
   """
   return re.split(r'({{.+?}}|{%.+?%})', text)
 
-
-
+def parse(text):
+  tokens = tokenise(text)
+  parsed = []
+  for token in tokens:
+    if token[:2] == "{{" and token[-2:] == "}}":
+      token = token[2:-2].strip()
+      parsed.append(node.ExprNode(token))
+    else:
+      parsed.append(node.TextNode(token))
+  groupNode = node.GroupNode(parsed)
+  return groupNode
 
 if __name__ == '__main__':
   import doctest
