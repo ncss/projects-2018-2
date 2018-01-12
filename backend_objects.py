@@ -9,7 +9,9 @@ import random
 
 
 numCharities = 0
+numUsers = 0
 charities = []
+users = []
 
 class Charity:
 
@@ -225,7 +227,7 @@ def getRandomCharity():
     num = random.randint(0, numCharities-1)
     x = call_query('SELECT id FROM charities WHERE id = ?', (num,))
     
-    if num not in x:
+    if not x:
         raise SyntaxError("HUGE PROBLEMS WITH READING DATABASE")
     else:
         return charities[num].getInfo()
@@ -234,7 +236,18 @@ def loadDatabase(): pass
     #charities
     #users
 
-def createUser(): pass
+def createUser(username, password, email):
+    user = User(username, password, '', '', email)
+    db.call_insert_users(username, password, email)
+    numUsers += 1
+    users.append(user)
+
+def createCharity(name, story, website):
+    charity = Charity(name, story, website, '')
+    db.call_insert_charities(numCharities, name, story, website)
+    numCharities += 1
+    charities.append(charity)
+
 
 
 '''
