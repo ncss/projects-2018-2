@@ -2,6 +2,12 @@
 #text, python expr
 import re
 
+# Relative imports are hard...
+try:
+  import node
+except ImportError:
+  from . import node
+
 def tokenise(text):
   """
   >>> tokenise('<h1>{{ person.name }} is {{ person.age }}</h1>')
