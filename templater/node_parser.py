@@ -1,7 +1,6 @@
 #look for all tags (end and star ones) 
 #text, python expr
 import re
-import node
 
 def tokenise(text):
   """

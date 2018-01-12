@@ -15,7 +15,7 @@ Syntax:
 
 """
 
-from node_parser import *
+from templater.node_parser import *
 
 def render(file,context):
     '''Renders given html file'''
