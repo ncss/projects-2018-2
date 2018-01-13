@@ -37,6 +37,7 @@ def feed_handler(request):
 def swipe_screen_handler(request, charity_profile_id, swipe_direction):
     request.write("You swiped " + swipe_direction + " for the Charity " + charity_profile_id)
 
+
 def about_handler(request):
     request.write(get_template("about.html"))
 
@@ -49,6 +50,10 @@ def default_handler(request, method):
 
 """def next_charity_handler(request, )"""
 """ Sends user to new page and sends info to data base"""
+
+# \d+ is any number
+# .+ = any letter but preferably a name!!
+
 
 server = Server()
 server.register(r"/?", home_page_handler)
