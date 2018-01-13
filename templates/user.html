@@ -22,13 +22,13 @@
 <div class="saved-links"> <h2>No Followed Charities</h2></div>
 {% end if %}
 {% if len(user.following()) %}
-{$ for charity in user.following() $}
       <div class="saved-links"> <h2>Followed Charities</h2>
         <ul class="links-list">
-            <p class = "profile_link"><a href="/charity_profile/{{charity._id}}/">{{charity._name}}</a></p>
+{$ for charity in user.following() $}
+            <li class = "profile_link"><a href="/charity_profile/{{charity._id}}/">{{charity._name}}</a></li>
+{$ end for $}
        </ul>
       </div>
-{$ end for $}
 {% end if %}
     </section>
   </div>
