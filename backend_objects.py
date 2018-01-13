@@ -57,6 +57,12 @@ class Charity:
         c = Charity(results[0],results[1],results[2],results[3], ID)
         return c
 
+    def update(self):
+        if self._id is None:
+            raise NameError("Charity's _id is None. Charity must have an ID (referring to the relevant database charity entry) in order to have it's database values updated. If this is a new Charity, use Charity.save()")
+        #The None's in the query are due to columns in the charity table that exisit for future post-MVP stuff, and aren't in the charity object. (category and admin_id)
+        call_query("UPDATE charity SET name= ?, category= ?, story= ?, charity_website_url= ?, image_src= ?, admin_id=? WHERE id=?", (self._name, None, self._story, self._websiteURL, self._logo, None, self._id))
+
     def save(self):
         '''
         Inserts the given data into the charity table of the database as a new value.
@@ -310,6 +316,13 @@ if __name__ == "__main__":
     print(c)
     print(c._id)
     assert c._id == 2
+    print('== Updating Charity information')
+    c._websiteURL = "http://www.blah.com/"
+    c.update()
+    c = Charity.get(2)
+    assert c._websiteURL == "http://www.blah.com/"
+    c._websiteURL = "https://hotspicyme.me"
+    c.update()
     print('== Getting User object')
     u = User.get(1)
     print('== User following Charity')
