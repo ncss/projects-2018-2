@@ -137,3 +137,23 @@ a {
 	transition: transform 2s;
 
 }
+
+button {
+	font-size: 30px;
+	margin: 6px;
+}
+
+textarea {
+	height: 500px;
+	margin: 6px;
+	font-size: 30px;
+}
+
+.SUBMIT_BUTTON {
+	color: blue;
+	background: skyblue;
+}
+
+input {
+	font-size: 30px;
+}
