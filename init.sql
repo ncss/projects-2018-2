@@ -51,7 +51,7 @@ CREATE TABLE posts (
 
 
 /* EXAMPLE DATA */
-INSERT INTO users(id,username,pword,email) VALUES (0, 'foo', 'fb2b9bb163acf7e3ad50dd8d950b56ba0065d96aedb36ffcaa87dc44b9000f2a', 'baz@snailmail.com');
+INSERT INTO users(id,username,pword,email) VALUES (0, 'Jane Smith', 'fb2b9bb163acf7e3ad50dd8d950b56ba0065d96aedb36ffcaa87dc44b9000f2a', 'baz@snailmail.com');
 INSERT INTO users(id,username,pword,email) VALUES (1, 'bob', 'fb2b9bb163acf7e3ad50dd8d950b56ba0065d96aedb36ffcaa87dc44b9000f2a', 'bob@snailmail.com');
 INSERT INTO users(id,username,pword,email) VALUES (2, 'fred', 'fb2b9bb163acf7e3ad50dd8d950b56ba0065d96aedb36ffcaa87dc44b9000f2a', 'george@snailmail.com');
 INSERT INTO users(id,username,pword,email) VALUES (3, 'percy', 'fb2b9bb163acf7e3ad50dd8d950b56ba0065d96aedb36ffcaa87dc44b9000f2a', 'riptide@snailmail.com');
