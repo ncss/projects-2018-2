@@ -20,8 +20,7 @@ class Charity:
         self._story = story
         self._websiteURL = websiteURL
         self._logo = logoURL
-        global numCharities
-        numCharities += 1
+        self._id = None
 
         
     def editProfile(self, charityName, story, websiteURL):
@@ -58,6 +57,21 @@ class Charity:
         c = Charity(results[0],results[1],results[2],results[3])
         return c
 
+    def save(self):
+        '''
+        Inserts the given data into the charity table of the database as a new value.
+        '''
+        data = call_query("""
+            SELECT MAX(id)
+            FROM charity;
+        """,'')
+        newcharityid = data[0][0] + 1
+        call_query("""
+            INSERT INTO charity(id,name,category,story,charity_website_url,image_src,admin_id)
+            VALUES (?, ?, '', ?, ?, ?, '');
+            """, (newcharityid, self._name, self._story, self._websiteURL, self._logo,))
+        self._id = newcharityid
+
     def post(self, title, content):
         _upload(title, content)
         ###
@@ -78,7 +92,8 @@ class User:
         #self._formerUsernames = []
         self._friends = []
         self._follows = []
-        self._charity = charID
+        #self._charity = charID
+        self._id = None
         #self._blocked = []
 
         
@@ -178,7 +193,18 @@ class User:
         results = results[0]
         c = User(results[0],results[1],results[2],results[3],results[4])
         return c
-    
+
+    def save(self):
+        data = call_query("""
+            SELECT MAX(id)
+            FROM users;
+        """,'')
+        newid = data[0][0] + 1
+        call_query("""
+            INSERT INTO users(id,username,pword,fname,sname,email)
+            VALUES (?, ?, ?, '', '', ?);""", (newid, self._username, self._password, self._email,))
+        self._id = newid
+
 
 class Post:
 
@@ -274,12 +300,22 @@ def createCharity(name, story, website):
     charities.append(charity)
 
 if __name__ == "__main__":
-    c = Charity.get(6)
+    c = Charity.get(2)
     print(c._name)
     assert c._name == "Snail Helpline"
 
     r =  getRandomCharity()
     print(r._name)
+
+    c = Charity('bob')
+    print('Saving object:', c._id)
+    c.save()
+    print('Saving object:', c._id)
+
+    c = User('John','','','','')
+    print('Saving object:', c._id)
+    c.save()
+    print('Saving object:', c._id)
 
 '''
 def validateURL(url):
