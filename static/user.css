@@ -1,0 +1,61 @@
+.wrapper{
+
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.title{
+justify-self: center;
+}
+
+.user-image{
+grid-row: 1;
+display: flex;
+justify-content: center;
+}
+
+.user-info{
+grid-row-start: 2;
+grid-row-end:2;
+justify-self: center;
+font-family: 'Monseratt', Serif;
+
+}
+
+.newsfeed{
+grid-row-start: 3;
+grid-row-end: 3;
+justify-self: center;
+font-family: 'Lora', sans-serif;
+font-size: 70px;
+}
+
+.saved-links{
+grid-row: 4;
+justify-self: center;
+text-align: center;
+margin: 0 auto;
+font-size: 50px;
+padding: 0 !important;
+}
+.saved-links > h2 {
+  margin-bottom: 0px;
+}
+h2{
+  font-family: 'Lora', sans-serif;
+  font-size: 80px;
+
+}
+
+.links-list {
+  list-style-type: none;
+  -webkit-padding-start: 0px;
+  text-align: center;
+  font-size: 30px;
+}
+
+
+.account_circle_profile {
+  font-size: 440px !important;
+  color: rgb(117, 117, 117);
+}

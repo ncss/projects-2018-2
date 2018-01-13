@@ -68,7 +68,9 @@ def about_handler(request):
 
 def user_profile_handler(request, user_profile_id, user_profile_name):
     #request.write("Here is " + user_profile_id + " aka " + user_profile_name)
-    request.write(get_template("user.html").format(user_profile_id = user_profile_id, user_profile_name = user_profile_name))
+    user = backend_objects.User.get(0)
+    context = {"user": user}
+    request.write(templater.render("templates/user.html", context))
 
 def charity_list_handler(request):
     context = {}

@@ -69,7 +69,9 @@ p {
 	font-size: 20px;
 	margin:5px;
 }
-
+li {
+		font-family: 'Montserrat', sans-serif;
+}
 h1,h2,h3 {
 	text-align: center;
 }
