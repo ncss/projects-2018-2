@@ -4,7 +4,6 @@ import datetime, time
 import sqlite3, os
 import db
 import random
-import hashlib
 from db import call_query
 
 
@@ -189,15 +188,6 @@ class User:
         charities = [Charity.get(row[0]) for row in result]
         return charities
             
-
-    def following(self):
-        '''
-        This function returns the number of charities that are being followed by the user.
-        No arguments are passed to this function."
-        '''
-        result = call_query("SELECT charity_id FROM charity_followers WHERE user_id = ?;",(self._id,))
-        charities = [Charity.get(row[0]) for row in result]
-        return charities
             
 
     def hasDonated(self, charity: int): #NOT MVP
@@ -223,25 +213,8 @@ class User:
 
     def update(self):
         if self._id is None:
-            raise NameError("user's id is None. User must have an ID (referring to the relevant database User entry) in order to have its database values updated. If this is a new User, use User.save()")
+            raise NameError("user's id is None. User must have an ID (referring to the relevant database User entry) in order to have it's database values updated. If this is a new User, use User.save()")
         call_query("UPDATE users SET username= ?, pword= ?, fname= ?, sname= ?, email= ? WHERE id = ?;", (self._username, self._password, self._fname, self._sname, self._email, self._id))
-
-    @staticmethod
-    def login(username, password):
-        '''
-        Takes two strings and compares the hashed password with the database,
-        returning the id of that user.
-        '''
-        h = hashlib.sha256()
-        h.update(password.encode())
-        data = call_query("""SELECT id FROM users WHERE username = ? and pword = ?
-
-            """,(username, h.hexdigest()))
-        
-        if len(data):
-            return User.get(data[0][0])
-        else:
-            return None
         
     @staticmethod
     def get(ID):
@@ -265,6 +238,32 @@ class User:
             INSERT INTO users(id,username,pword,fname,sname,email)
             VALUES (?, ?, ?, '', '', ?);""", (newid, self._username, hashlib.sha256(self._password.encode()).hexdigest(), self._email,))
         self._id = newid
+
+    def getCharityFriends(self, charID):
+        c = Charity.get(charID)
+        people = c.followers()
+        return [x for x in people if self.isFriend(x._id)]
+
+    @staticmethod
+    def login(username, password):
+        '''
+        Takes two strings and compares the hashed password with the database,
+        returning the object
+         of that user.
+        '''
+        h = hashlib.sha256()
+        h.update(password.encode())
+        data = call_query("""SELECT id FROM users WHERE username = ? and pword = ?
+
+            """,(username, h.hexdigest()))
+        
+        if len(data):
+            return User.get(data[0][0])
+        else:
+            return None
+
+
+
 
 
 class Post:
@@ -421,6 +420,10 @@ if __name__ == "__main__":
     c = User.get(c._id)
     assert c._password == 'fb2b9bb163acf7e3ad50dd8d950b56ba0065d96aedb36ffcaa87dc44b9000f2a'
 
+    print('== Testing login')
+    assert User.login('foo', 'trident')._id == 0
+    assert User.login('foo', 'satgsweg') == None
+
     print('== Updating User')
     #Get and update User
     u = User.get(3)
@@ -432,9 +435,22 @@ if __name__ == "__main__":
     u._fname = None
     u.update()
 
-    print('== Testing login')
-    assert User.login('foo', 'trident')._id == 0
-    assert User.login('foo', 'satgsweg') == None
+
+    print('== Testing Charity Friends ==')
+    u = User.get(0)
+    print(u.getCharityFriends(0))
+    u.addFriend(1)
+    u1 = User.get(1)
+    u1.follow(0)
+    print(u.getCharityFriends(0))
+    assert len(u.getCharityFriends(0)) > 0
+    u1.unfollow(0)
+    print(u.getCharityFriends(0))
+    assert len(u.getCharityFriends(0)) == 0
+
+
+    
+    
 
 '''
 def validateURL(url):
