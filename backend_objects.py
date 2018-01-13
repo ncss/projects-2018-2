@@ -138,6 +138,15 @@ class User:
         else:
             return False
 
+    def friends(self):
+        '''
+        This function returns a list of all the user's friends.
+        No arguments are passsed to this function.
+        '''
+        result = call_query("SELECT user_id2 FROM friends WHERE (user_id1 = ?);", (self._id, ))
+        user_friends = [User.get(row[0]) for row in result]
+        return user_friends
+
 
     def controlsCharity(self, charity: int):
 
@@ -386,9 +395,14 @@ if __name__ == "__main__":
     print('== User befriending User')
     print(u.isFriend(3))
     u.addFriend(3)
+    print('==Returning list of friends==')
+    print(u.friends())
+    assert u.friends()[0]._id == 3
     print(u.isFriend(3))
     u.removeFriend(3)
     print(u.isFriend(3))
+    print('==Returning list of friends==')
+    print(u.friends())
     print('== Getting random charity')
     r =  getRandomCharity()
     print(r._name)
