@@ -12,12 +12,15 @@
   {~ include templates/header.html ~}
 <section>
 <h2>Create new charity</h2>
-<form action="/post_create_charity_profile" method = "POST">
+<form class="createCharity" action="/post_create_charity_profile" method = "POST">
 <input id="new_name" type="text" name = "new_name" placeholder="Enter name of charity"></input>
+<br>
 <!-- <p><strong>Upload charity photo</strong><button>UPLOAD</button> <img id="uploaded_image" src="/static/images/preview.png"></p> -->
-<input id="logo_name" type="text" name = "logo_name" placeholder="Enter link to your Logo"></input>
+<input id="logo_name" type="text" class = "input" name = "logo_name" placeholder="Enter link to your Logo"></input>
+<br>
 <textarea id="new_bio" type="text" name ="new_bio" placeholder="Enter charity Bio (205 word limit)"></textarea>
-<button type="submit" class="SUBMIT_BUTTON">SUBMIT</button>
+<br>
+<center><button type="submit" class="SUBMIT_BUTTON">SUBMIT</button></center>
 </form>
 </section>
 </body>
