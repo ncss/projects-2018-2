@@ -27,14 +27,15 @@ def charity_profile_handler(request, charity_profile_id):
 
 def create_charity_profile_handler(request):
     context = {}
-    request.write(templater.render("create_charity_profile.html", context))
+    request.write(templater.render("templates/create_charity_profile.html", context))
     """Wanting to do something here but not sure what yet."""
 
 def post_create_profile_handler(request, charity_name, charity_logo):
     request.write("You have added a Charity with this name " + charity_name + " and logo " + charity_logo)
 
 def feed_handler(request):
-    request.write(get_template("templates/feed.html"))
+    context = {}
+    request.write(templater.render("templates/feed.html", context))
 
 def swipe_screen_handler(request, charity_profile_id, swipe_direction):
     #request.write("You swiped " + swipe_direction + " for the Charity " + charity_profile_id)
@@ -44,6 +45,14 @@ def swipe_screen_handler(request, charity_profile_id, swipe_direction):
         user.follow(charity_profile_id)
         pass#numfollowed = numfollowed + 1
     home_page_handler(request)
+def create_user_profile_handler(request):
+    context = {}
+    request.write(templater.render("templates/user_sign_up.html", context))
+
+def post_create_user_profile_handler(request, user_profile_id, user_profile_name):
+    context = {}
+    request.write("You have created a user page with the name: " + user_profile_name + " and the id: " + user_profile_id)
+
 def user_handler(request):
     request.write("Logged|Not logged in.")
 
@@ -72,6 +81,8 @@ server.register(r"/swipe/(\d+)/(left|right)/?", swipe_screen_handler)
 server.register(r"/feed/?", feed_handler)
 server.register(r"/about/?", about_handler)
 server.register(r"/user_profile/(\d+)/(.+)/?", user_profile_handler)
+server.register(r"/create_user_profile/?", create_user_profile_handler) 
+server.register(r"/post_create_profile/(.+)/(\d+)/?", post_create_profile_handler)
 server.register(r"/user/?", user_handler)
 server.set_default_handler(default_handler)
 server.run()
