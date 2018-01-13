@@ -18,11 +18,10 @@ def home_page_handler(request):
 
 def charity_profile_handler(request, charity_profile_id):
     charity = backend_objects.Charity.get(charity_profile_id)
-    numfollowed = 5 #backend_objects.Charity.followed(charity_profile_id)
     #charity = backend_objects.Charity("Snail Helpline", "We help snails!!", "https://en.wikipedia.org/wiki/Snail", logoURL = "snail.jpg")
     #request.write("Here is the profile for charity " + charity_profile_id + ".")
     #request.write(get_template("charity.html").format(charity_profile_id = charity_profile_id, charity_name = "charity_name", charity_logo = "charity_logo"))
-    context = {"charity": charity, "charity_profile_id": charity_profile_id, "numfollowed" : numfollowed}
+    context = {"charity": charity, "charity_profile_id": charity_profile_id}
     request.write(templater.render("templates/charity.html", context))
 
 

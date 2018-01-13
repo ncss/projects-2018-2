@@ -16,7 +16,7 @@
 
 <h1> {{charity_profile_id}} {{charity._name}} </h1>
 <section><h2> Bio </h2>
-  <p> Follows: {{numfollowed}} </p>
+  <p> Follows: {{len(charity.followers())}} </p>
 <p>{{charity._story}}</p> </section>
 <section> <h2> Link </h2>
   <p> <a href= "{{charity._websiteURL}}"><big> CLICK ME </big> </a> </section>
