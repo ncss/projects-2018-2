@@ -19,10 +19,12 @@ input {
 	text-align: center;
 }
 
-h4 {
+.title {
 	font-family: sans-serif;
+	color: black;
 }
 
 .fname_input {
-	margin-left: 175px;
+	margin-left: 185px;
 }
+

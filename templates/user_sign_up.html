@@ -18,26 +18,30 @@
   </header>
   {~ include templates/hamburger_menu.html ~}
   <div class="forms">
-    <form>
-      <h4 class="fname_input">First name:<br></h4>
+    <form method="POST" action="/">
+      <h2 class="title">Create User Form</h1>
       <br>
-      <input name="fname"><br>
+      <input name="username" placeholder="Username">
       <br>
-      <h4>Last name:<br></h4>
       <br>
-      <input name="sname">
       <br>
-      <h4>email:<br></h4>
+      <input name="fname" placeholder="First Name">
       <br>
-      <input name="email">
+      <input name="sname" placeholder="Last Name">
       <br>
-      <h4>password:<br></h4>
       <br>
-      <input name="pass">
       <br>
-      <h4>confirm password:<br></h4>
+      <input name="email" placeholder="Email Name">
       <br>
-      <input name="pass">
+      <br>
+      <br>
+      <input name="pass" type="password" placeholder="Password">
+      <br>
+      <input name="pass" type="password" placeholder="Confirm Password">
+      <br>
+      <br>
+      <br>
+      <input type="submit">
     </form>
  </div>
 </body>
