@@ -1,13 +1,3 @@
-header {
-	background-color: #9c988e;
-	display:inline-grid;
-	width: 75%;
-	margin-left:12.5%;
-	margin-bottom: 5px;
-	margin-top: 5px;
-	padding: 6px;
-}
-
 h1 {
 	margin: 0;
 	margin-left: 30px;
@@ -59,8 +49,8 @@ p {
 	background-color: lightblue;
   display: grid;
   grid-template-columns: 10% 90%;
-	width: 75%;
-	margin-left: 12.5%;
+	width: 85%;
+	margin-left: 7%;
 	margin-bottom: 5px;
   padding: 6px;
 }
@@ -76,8 +66,8 @@ ul {
 		text-align: right;
 		font-size: 20px;
 		font-family: 'Montserrat', sans-serif;
-		width:75%;
-    margin-left: 12.5%;
+		width:85%;
+    margin-left: 7%;
     padding: 6px;
 }
 
@@ -94,7 +84,7 @@ li {
 	padding: 10px;
 }
 
-.userpic {
+li.userpic {
 	width: 50px;
 	padding: 0;
 }
