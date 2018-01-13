@@ -244,9 +244,9 @@ def getTime() -> tuple:
     return (date, clock,)
 
 def getRandomCharity():
-    print(charities)
+    #print(charities)
     numCharities = db.call_query('SELECT MAX(id) FROM charity', '')[0][0]
-    print(numCharities)
+    #print(numCharities)
     num = random.randint(0, numCharities)
     x = Charity.get(num)
 
@@ -273,7 +273,13 @@ def createCharity(name, story, website):
     numCharities += 1
     charities.append(charity)
 
+if __name__ == "__main__":
+    c = Charity.get(6)
+    print(c._name)
+    assert c._name == "Snail Helpline"
 
+    r =  getRandomCharity()
+    print(r._name)
 
 '''
 def validateURL(url):
