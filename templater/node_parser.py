@@ -33,7 +33,12 @@ def tokenise(text):
   >>> tokenise('{% if f.has_nickname() %} ({{ f.nickname }}) {% end if %}')
   ['', '{% if f.has_nickname() %}', ' (', '{{ f.nickname }}', ') ', '{% end if %}', '']
   """
-  return re.split(r'({{.+?}}|{%.+?%}|{\$.+?\$})', text) ##
+  return re.split(r'({{.+?}}|{%.+?%}|{\$.+?\$}|{~.+?~})', text) ##
+
+END_IF_TAG = r'^{%\s*end if\s*%}$'
+END_FOR_TAG = r'^{\$\s*end for\s*\$}$'
+INCLUDE_TAG = r'^{~\s*include (.+)\s*~}$'
+EXPRESSION_TAG = r'^{{\s*(.+)\s*}}$'
 
 class Parser():
   
@@ -44,12 +49,14 @@ class Parser():
     
   def parse_group(self): #turns tokens into a groupnode
     group_ofNodes = []
-    while not (self.end() or self.peek() == "{%end if%}" or self.peek() == "{$end for$}"):
+    while not (self.end() or re.match(END_IF_TAG, self.peek()) or re.match(END_FOR_TAG, self.peek())):
       node = self.parse_expr()
       if node == None:
         node = self.parse_if()
       if node == None:
         node = self.parse_for()
+      if node == None:
+        node = self.parse_include()
       if node == None:
         node = self.parse_text()
       group_ofNodes.append(node)
@@ -73,10 +80,9 @@ class Parser():
     return(nodes.TextNode(text))
   
   def parse_expr(self): #translates token into node.        node translates into html beauty
-    if self.peek()[:2] == "{{": #if current val is expr node
-      text = self.peek()
-      text = text.replace("{{", "")
-      text = text.replace("}}", "")
+    someVariable = re.match(EXPRESSION_TAG, self.peek())
+    if someVariable:
+      text = someVariable.group(1)
       self.next()
       return(nodes.ExprNode(text))
     else:
@@ -89,7 +95,7 @@ class Parser():
       
       self.next()  
       group = self.parse_group()
-      if self.peek() == "{%end if%}":
+      if re.match(END_IF_TAG, self.peek()):
         self.next()
       else:
         raise SyntaxError("If doesn't have a corresponding end if! What's the deal man/woman?")
@@ -104,13 +110,23 @@ class Parser():
       itemName = someVariable.group(1)
       self.next()  
       group = self.parse_group()
-      if self.peek() == "{$end for$}":
+      if re.match(END_FOR_TAG, self.peek()):
         self.next()
       else:
         raise SyntaxError("For doesn't have a corresponding end for! What's the deal man/woman?")
       return nodes.ForNode(iterable, itemName, group)
     else:
       return None
+
+  def parse_include(self):
+    someVariable = re.match(INCLUDE_TAG, self.peek())
+    if someVariable:
+      text = someVariable.group(1)
+      self.next()
+      return(nodes.IncludeNode(text))
+    else:
+      return None
+
 
   
 

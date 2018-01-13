@@ -31,6 +31,10 @@ FOR LOOP
 
     STUFF will run for each 'item' in 'list'.
 
+INCLUDE
+    {~ include file.html ~}
+
+    Copies all the contents of 'file.html' into this page.
 
 Template Team:
 
