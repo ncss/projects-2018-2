@@ -15,7 +15,16 @@
 'TEST 1 TEST 2'
 >>> if_node.translate({'x': 2, 'variable': 'TEST 2'})
 ''
+>>> with open('eg1.html', 'w') as f: print('<html><head>{{ var }}</head>', file=f, end='')
+>>> IncludeNode('eg1.html').translate({'var': 123})
+'<html><head>123</head>'
 """
+
+# Relative imports are hard...
+try:
+  import node_parser
+except ImportError:
+  from . import node_parser
 
 
 class Node:
@@ -68,6 +77,12 @@ class ForNode(Node):
               
         del context[self._name]
         return return_string
+
+class IncludeNode(Node):
+    def translate(self,context):
+        with open(self._string) as f:
+            return node_parser.parse(f.read()).translate(context)
+
 if __name__ == '__main__':
     import doctest
     fail_count, test_count = doctest.testmod()
