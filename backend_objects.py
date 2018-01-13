@@ -22,6 +22,8 @@ class Charity:
         self._logo = logoURL
         self._id = _id
 
+    def __str__(self):
+        return "CHARITY OBJECT:( id:{} name:'{}' story[:10]:'{}' websiteURL:'{}' logoURL:'{}' )".format(self._id, self._name, self._story, self._websiteURL, self._logo)
         
     def editProfile(self, charityName, story, websiteURL):
         self._name = charityName
@@ -86,7 +88,16 @@ class Charity:
         ''' something goes here'''
         some_variable = Post(title, content, self._name)
 
-    
+    def followers(self):
+        data = call_query("""
+                SELECT user_id FROM charity_followers WHERE ? = charity_id
+                """,(self._id,))
+        users = []
+        for row in data:
+            users.append(User.get(row[0]))
+
+        return users
+
 class User:
 
     def __init__(self, username, password, fname, sname, email, _id=None):
@@ -102,6 +113,8 @@ class User:
         self._id = _id
         #self._blocked = []
 
+    def __str__(self):
+        return "USER OBJECT:( id:{} username:'{}' password:{} self._fname:'{}' self._sname:'{}' self._email:'{}' )".format(self._id, self._username, self._password, self._fname, self._sname, self._email)
         
     def addFriend(self, username): #NOT MVP
         '''
@@ -166,6 +179,16 @@ class User:
             self._follows.remove(charity)
             return True
         pass
+
+    def following(self):
+        '''
+        This function returns the number of charities that are being followed by the user.
+        No arguments are passed to this function."
+        '''
+        result = call_query("SELECT charity_id FROM charity_followers WHERE user_id = ?;",(self._id,))
+        charities = [Charity.get(row[0]) for row in result]
+        return charities
+            
 
     def hasDonated(self, charity: int): #NOT MVP
         '''
@@ -308,13 +331,14 @@ def createCharity(name, story, website):
     numCharities += 1
     charities.append(charity)
 
+
+
+
 if __name__ == "__main__":
-    print('== Getting Charity object')
+    print('== Getting Charity object (id=2)')
     c = Charity.get(2)
-    print(c._name)
-    assert c._name == "Snail Helpline"
     print(c)
-    print(c._id)
+    assert c._name == "Snail Helpline"
     assert c._id == 2
     print('== Updating Charity information')
     c._websiteURL = "http://www.blah.com/"
@@ -323,10 +347,13 @@ if __name__ == "__main__":
     assert c._websiteURL == "http://www.blah.com/"
     c._websiteURL = "https://hotspicyme.me"
     c.update()
-    print('== Getting User object')
+    print('== Getting User object (id=1)')
     u = User.get(1)
+    print(u)
     print('== User following Charity')
     u.follow(c._id)
+    assert len(c.followers()) >= 0
+    assert len(u.following()) >= 0
     result = call_query("SELECT 1 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?);",(2, 1))
     print(result)
     assert len(result) > 0
@@ -357,6 +384,8 @@ if __name__ == "__main__":
     assert u._fname == "Mr Snail"
     u._fname = None
     u.update()
+
+    
     
 
 '''
