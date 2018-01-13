@@ -27,7 +27,8 @@ def charity_profile_handler(request, charity_profile_id):
 
 
 def create_charity_profile_handler(request):
-    pass
+    context = {}
+    request.write(templater.render("create_charity_profile.html", comtext))
     """Wanting to do something here but not sure what yet."""
 
 def post_create_profile_handler(request, charity_name, charity_logo):
