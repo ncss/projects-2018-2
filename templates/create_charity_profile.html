@@ -13,10 +13,13 @@
 </header>
 <section>
 <h2>Create new charity</h2>
-<input id="new_name" type="text" placeholder="Enter name of charity"></input>
-<p><strong>Upload charity photo</strong><button>UPLOAD</button> <img id="uploaded_image" src="/static/images/preview.png"></p>
+<form action="/post_create_profile" method = "POST">
+<input id="new_name" type="text" name = "new_name" placeholder="Enter name of charity"></input>
+<!-- <p><strong>Upload charity photo</strong><button>UPLOAD</button> <img id="uploaded_image" src="/static/images/preview.png"></p> -->
+<input id="logo_name" type="text" name = "logo_name" placeholder="Enter link to your Logo"></input>
 <textarea id="new_bio" type="text" placeholder="Enter charity Bio (205 word limit)"></textarea>
 <button type="submit" class="SUBMIT_BUTTON">SUBMIT</button>
+</form>
 </section>
 </body>
 </html>

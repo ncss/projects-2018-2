@@ -30,8 +30,9 @@ def create_charity_profile_handler(request):
     request.write(templater.render("templates/create_charity_profile.html", context))
     """Wanting to do something here but not sure what yet."""
 
-def post_create_profile_handler(request, charity_name, charity_logo):
-    request.write("You have added a Charity with this name " + charity_name + " and logo " + charity_logo)
+def post_create_profile_handler(request):
+    charity_name = request.get_field('new_name')
+    request.write("You have added a Charity with this name " + charity_name)
 
 def feed_handler(request):
     context = {}
@@ -76,12 +77,12 @@ server = Server()
 server.register(r"/?", home_page_handler)
 server.register(r"/charity_profile/(\d+)/?", charity_profile_handler)
 server.register(r"/create_charity_profile/?", create_charity_profile_handler)
-server.register(r"/post_create_profile/(.+)/(.+)/?", post_create_profile_handler)
+server.register(r"/post_create_profile/?", post_create_profile_handler)
 server.register(r"/swipe/(\d+)/(left|right)/?", swipe_screen_handler)
 server.register(r"/feed/?", feed_handler)
 server.register(r"/about/?", about_handler)
 server.register(r"/user_profile/(\d+)/(.+)/?", user_profile_handler)
-server.register(r"/create_user_profile/?", create_user_profile_handler) 
+server.register(r"/create_user_profile/?", create_user_profile_handler)
 server.register(r"/post_create_profile/(.+)/(\d+)/?", post_create_profile_handler)
 server.register(r"/user/?", user_handler)
 server.set_default_handler(default_handler)
