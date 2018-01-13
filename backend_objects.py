@@ -309,6 +309,14 @@ class Post:
         results = call_query("SELECT charity_id, post_type, timestamp, content_text, content_image, content_event_time, content_event_location, id FROM posts WHERE charity_id = ?", (charityID,))
         return [Post(result[0], result[1], dbTimeFormatToDatetime(result[2]), result[3], result[4], dbTimeFormatToDatetime(result[5]), result[6], result[7]) for result in results]
 
+    @staticmethod
+    def getAllPosts():
+        '''
+        Get's a post object based on the ID from the owning charitiy's ID
+        '''
+        results = call_query("SELECT charity_id, post_type, timestamp, content_text, content_image, content_event_time, content_event_location, id FROM posts;")
+        return sorted([Post(result[0], result[1], dbTimeFormatToDatetime(result[2]), result[3], result[4], dbTimeFormatToDatetime(result[5]), result[6], result[7]) for result in results], key=(lambda post : post._timestamp), reverse=True)
+
     def update(self):
         '''
         Pushes any changes made to the post object into the database
@@ -485,7 +493,7 @@ if __name__ == "__main__":
     c.save()
     print('Saving object:', c._id)
 
-    print('== Creating new User')
+    '''print('== Creating new User')
     c = User('John','trident','','','')
     print('Saving object:', c._id)
     c.save()
@@ -496,7 +504,7 @@ if __name__ == "__main__":
     print('== Testing login')
     assert User.login('foo', 'trident')._id == 0
     assert User.login('foo', 'satgsweg') == None
-
+    '''
     print('== Updating User')
     #Get and update User
     u = User.get(3)

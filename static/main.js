@@ -4,7 +4,7 @@ rightarrow.addEventListener("click", (ev) => {
   setTimeout(() => {
     charitylogo.classList.remove("swipe_image_left");
     window.location.replace("/");
-  }, 100);
+  }, 400);
   return false;
 });
 
@@ -14,7 +14,7 @@ leftarrow.addEventListener("click", (ev) => {
   setTimeout(() => {
     charitylogo.classList.remove("swipe_image_right");
     window.location.replace("/");
-  }, 100);
+  }, 400);
   return false;
 });
 
@@ -30,7 +30,7 @@ charitylogo.addEventListener("pointerdown", (ev) =>  {
 
 function swipeFinish(delta) {
 	console.log(delta)
-	if (delta > 150) {
+	if (delta > 250) {
 		rightarrow.click();
 	} else if (delta < -250 ) {
 				leftarrow.click();
@@ -49,7 +49,7 @@ charitylogo.addEventListener("pointerup", (ev) =>  {
 	
 	})
 
-document.body.addEventListener("pointerleave", (ev) =>  {
+charitylogo.addEventListener("pointerleave", (ev) =>  {
 	if (ev.pointerType != "touch") {
 	startPosition = null;
 	charitylogo.style.transform = null;
@@ -57,7 +57,7 @@ document.body.addEventListener("pointerleave", (ev) =>  {
 	}
 })
 
-document.body.addEventListener("touchend", (ev) => {
+charitylogo.addEventListener("touchend", (ev) => {
 	let delta = ev.changedTouches[0].screenX - startPosition;
 	swipeFinish(delta);
 

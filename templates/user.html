@@ -1,10 +1,33 @@
 <!-- Template file for html created by Sara -->
 <!DOCTYPE html>
 <html>
-  <head></head>
-  <body><p>Hello, this is the user page!</p>
-      <p>
-          {user_profile_id}, {user_profile_name}
-      </p>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Lora|Montserrat" rel="stylesheet">
+    <link href="/static/main.css" rel="stylesheet">
+    <link href="/static/user.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+  </head>
+  <body>
+
+      {~ include templates/header.html ~}
+  <div class= "wrapper">
+    <div class="user-image"> <i class="material-icons account_circle_profile">account_circle</i> </div>
+    <section>
+      <div class= "user-info"> <h2>{{user._username}}</h2> </div>
+    </section>
+
+    <section>
+      <div class="saved-links"> <h2> Saved Charities</h2>
+        <ul class="links-list">
+            <li><a href="https://www.vinnies.org.au/donate?gclid=EAIaIQobChMIp8LR5N_R2AIVygorCh1A4wvOEAAYASAAEgIXUvD_BwE"> Vinnies </li>
+            <li><a href="https://www.my.salvationarmy.org.au/login?bm=722986945"> Salvation Army </li>
+            <li><a href="https://www.headspace.org.au/"> HeadSpace Australia </li>
+            <li><a href="https://www.worldvision.com.au/"> World Vision </li>
+            <li><a href="https://www.bcrf.org/?gclid=EAIaIQobChMIppS-mrfV2AIVhCQrCh2OFwbyEAAYASAAEgLQDvD_BwE"> Breast Cancer</li>
+       </ul>
+      </div>
+    </section>
+  </div>
   </body>
 </html>
