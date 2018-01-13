@@ -14,41 +14,21 @@
     {~ include templates/header.html ~}
     <h3>Charity Newsfeed</h3>
 
+	{$ for post in Post.getAllPosts() $}
     <div class="grid-container">
       <div class="profilepic">
-        <img src = "/static/images/person.jpeg">
+        <img src = " {{ Charity.get(post._charityID)._logo }}">
       </div>
       <div class="profilename">
-        <h2>Charity Name??</h2>
+        <h2>{{ Charity.get(post._charityID)._name }}</h2>
       </div>
       <div class="post">
-        <p>This is their post! Events? Situation Update? etc.<p>
+        <p>{{ post._contentText }}<p>
       </div>
     </div>
-
-    <div class="grid-container">
-      <div class="profilepic">
-        <img src = "/static/images/person.jpeg">
-      </div>
-      <div class="profilename">
-        <h2>Charity Name??</h2>
-      </div>
-      <div class="post">
-        <p>This is their post! Events? Situation Update? etc.<p>
-      </div>
-    </div>
-
-    <div class="grid-container">
-      <div class="profilepic">
-        <img src = "/static/images/person.jpeg">
-      </div>
-      <div class="profilename">
-        <h2>Charity Name??</h2>
-      </div>
-      <div class="post">
-        <p>This is their post! Events? Situation Update? etc.<p>
-      </div>
-    </div>
+	{$ end for $}
+	
+	
 
   </body>
 </html>

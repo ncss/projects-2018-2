@@ -37,8 +37,9 @@ def post_create_charity_profile_handler(request):
     request.write("You have added a Charity with this name " + charity_name + ". Your logo name is: " + charity_logo_name + ". And your bio is: " + charity_new_bio)
     new_charity = backend_objects.Charity(charity_name,story=charity_new_bio,logoURL=charity_logo_name)
     new_charity.save()
+
 def feed_handler(request):
-    context = {}
+    context = {"Post":backend_objects.Post, "Charity":backend_objects.Charity}
     request.write(templater.render("templates/feed.html", context))
 
 def swipe_screen_handler(request, charity_profile_id, swipe_direction):
