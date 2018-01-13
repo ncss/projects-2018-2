@@ -2,6 +2,15 @@
 ## Group 2
 
 Team members:
+<<<<<<< HEAD
+* Jackson
+* Alex H
+* Chris
+* Tom
+* ???
+* Shovel Q
+*Karina
+=======
 * Jackson (aka Superman)
 * Alex H (aka Deadman)
 * Chris (aka Green Lantern)
@@ -19,3 +28,4 @@ Team members:
 * Ella (aka Posion Ivy)
 * Julia (aka Batman)
 * Karina 
+>>>>>>> origin/master

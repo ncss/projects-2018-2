@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>Home</title>
 <link href="/static/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Comfortaa|Lora|Montserrat" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -24,9 +25,10 @@
     <img src="{{charity._logo}}" class="icon" id = "charitylogo">
     </p>
     <p class="center">
-    <a id = "leftarrow" href="/swipe/{{charity._id}}/left/">&#8592;</a>
-    <a id = "rightarrow" href="/swipe/{{charity._id}}/right/">&#8594;</a>
-
+      <div class = "swipebox">
+        <div><a id = "leftarrow" href="/swipe/{{charity._id}}/left/"><i class="material-icons" style="font-size:80px;color:black">restore</i><br>Maybe<br>Later</a></div>
+        <div><a id = "rightarrow" href="/swipe/{{charity._id}}/right/"><i class="material-icons" style="font-size:80px;color:red">favorite</i><br>Follow<br>Now</a></div>
+      </div>
     </p>
     </section>
 
