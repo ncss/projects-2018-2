@@ -4,6 +4,7 @@ import datetime, time
 import sqlite3, os
 import db
 import random
+import hashlib
 from db import call_query
 
 
