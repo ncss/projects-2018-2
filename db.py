@@ -25,22 +25,42 @@ def call_query(query, args):
 
 def call_insert_users(username, password, email):
     '''
-    Inserts the given data into the users table as a new value.
+    Inserts the given data into the users table of the database as a new value.
     '''
     db = conn.cursor()
     db.execute("""
         SELECT MAX(id)
         FROM users;
         """)
-    a = db.fetchall()
-    print(a)
-    newid = a[0][0] + 1
-
+    data = db.fetchall()
+    newid = data[0][0] + 1
     call_query("""
         INSERT INTO users(id,username,pword,fname,sname,email)
         VALUES (?, ?, ?, '', '', ?);""", (newid, username, password, email,))
 
     return newid
+
+def call_insert_charity(name :str, story: str, website: str, image_src: str, admin_id: int): #sql: id, name, category, story, charity_website_url, image_src, admin_id (still needs args)
+    '''
+    Inserts the given data into the charity table of the database as a new value.
+    '''
+    db = conn.cursor()
+    db.execute("""
+        SELECT MAX(id)
+        FROM charity;
+        """)
+    data = db.fetchall()
+    newcharityid = data[0][0] + 1
+    call_query("""
+        INSERT INTO charity(id,name,category,story,charity_website_url,image_src,admin_id)
+        VALUES (?, ?, '', ?, ?, ?, ?);
+        """, (newcharityid, name, story, website, image_src, admin_id,))
+
+    return newcharityid
+
+    
+
+
 
 
 

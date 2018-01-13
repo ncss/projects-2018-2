@@ -19,6 +19,7 @@ h3{
 
 h2 {
 	font-family: 'Lora', bold, serif;
+	text-align: left;
 	font-size: 30px;
 	margin-left: 20px;
 	margin-bottom: 10px;
@@ -27,6 +28,7 @@ h2 {
 p {
 	font-family: 'Montserrat', sans-serif;
 	font-size: 20px;
+	text-align: left;
 	margin-left: 20px;
 }
 

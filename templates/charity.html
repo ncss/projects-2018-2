@@ -8,17 +8,18 @@
 </head>
 <body>
   <header>
-  <h1>Chinder<a><img src="/static/images/HAM.png" class="hamburger"></a></h1>
+  <h1>Equalibrium<a><img src="/static/images/HAM.png" class="hamburger"></a></h1>
   <p class="white">name still work in progress 0-0</p>
   </header>
 
-<p> <img src="{{charity._logo}}"></p>
+<p> <img src="{{charity._logo}}" ></p>
 
-<h2 id="charity_name" font-size: 70px> {charity_profile_id} Snail Shelters </h2>
+<h1> {{charity_profile_id}} {{charity._name}} </h1>
 <section><h2> Bio </h2>
-<p> Enter Bio here </p> </section>
+  <p> Follows: {{len(charity.followers())}} </p>
+<p>{{charity._story}}</p> </section>
 <section> <h2> Link </h2>
-  <p> <a href= "https://en.wikipedia.org/wiki/Snail"><big> CLICK ME </big> </a> </section>
+  <p> <a href= "{{charity._websiteURL}}"><big> CLICK ME </big> </a> </section>
 <section> <h2> Updates </h2>
 <p> Enter updates here </p> </section>
 <section> <h2> Events </h2>

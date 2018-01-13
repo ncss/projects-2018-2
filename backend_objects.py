@@ -2,7 +2,7 @@ from tornado.ncss import Server, ncssbook_log
 import re
 import datetime, time
 import sqlite3, os
-#import db
+import db
 import random
 from db import call_query
 
@@ -15,14 +15,15 @@ users = []
 
 class Charity:
 
-    def __init__(self, charityName, story = '', websiteURL = '', logoURL = ''):
+    def __init__(self, charityName, story = '', websiteURL = '', logoURL = '', _id=None):
         self._name = charityName
         self._story = story
         self._websiteURL = websiteURL
         self._logo = logoURL
-        global numCharities
-        numCharities += 1
+        self._id = _id
 
+    def __str__(self):
+        return "CHARITY OBJECT:( id:{} name:'{}' story[:10]:'{}' websiteURL:'{}' logoURL:'{}' )".format(self._id, self._name, self._story, self._websiteURL, self._logo)
         
     def editProfile(self, charityName, story, websiteURL):
         self._name = charityName
@@ -55,8 +56,29 @@ class Charity:
         WHERE id = ?
         ''',(ID,))
         results = results[0]
-        c = Charity(results[0],results[1],results[2],results[3])
+        c = Charity(results[0],results[1],results[2],results[3], ID)
         return c
+
+    def update(self):
+        if self._id is None:
+            raise NameError("Charity's _id is None. Charity must have an ID (referring to the relevant database charity entry) in order to have it's database values updated. If this is a new Charity, use Charity.save()")
+        #The None's in the query are due to columns in the charity table that exisit for future post-MVP stuff, and aren't in the charity object. (category and admin_id)
+        call_query("UPDATE charity SET name= ?, category= ?, story= ?, charity_website_url= ?, image_src= ?, admin_id=? WHERE id=?", (self._name, None, self._story, self._websiteURL, self._logo, None, self._id))
+
+    def save(self):
+        '''
+        Inserts the given data into the charity table of the database as a new value.
+        '''
+        data = call_query("""
+            SELECT MAX(id)
+            FROM charity;
+        """,'')
+        newcharityid = data[0][0] + 1
+        call_query("""
+            INSERT INTO charity(id,name,category,story,charity_website_url,image_src,admin_id)
+            VALUES (?, ?, '', ?, ?, ?, '');
+            """, (newcharityid, self._name, self._story, self._websiteURL, self._logo,))
+        self._id = newcharityid
 
     def post(self, title, content):
         _upload(title, content)
@@ -66,10 +88,19 @@ class Charity:
         ''' something goes here'''
         some_variable = Post(title, content, self._name)
 
-    
+    def followers(self):
+        data = call_query("""
+                SELECT user_id FROM charity_followers WHERE ? = charity_id
+                """,(self._id,))
+        users = []
+        for row in data:
+            users.append(User.get(row[0]))
+
+        return users
+
 class User:
 
-    def __init__(self, username, password, fname, sname, email):
+    def __init__(self, username, password, fname, sname, email, _id=None):
         self._username = username
         self._password = password
         self._fname = fname
@@ -78,9 +109,12 @@ class User:
         #self._formerUsernames = []
         self._friends = []
         self._follows = []
-        self._charity = charID
+        #self._charity = charID
+        self._id = _id
         #self._blocked = []
 
+    def __str__(self):
+        return "USER OBJECT:( id:{} username:'{}' password:{} self._fname:'{}' self._sname:'{}' self._email:'{}' )".format(self._id, self._username, self._password, self._fname, self._sname, self._email)
         
     def addFriend(self, username): #NOT MVP
         '''
@@ -127,14 +161,12 @@ class User:
 
     def follow(self, charity: int):
         '''
-        Database
+        This function adds the ID of the user and the id of the charity that the user has chosen to follow into the charity_followers table.
+        Pass the ID of the charity, not the charity object.
         '''
-        if charity in self._follows:
-            return False
-        else:
-            self._follows.append(charity)
-            return True
-
+        result = call_query("SELECT 1 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?);",(charity, self._id))
+        if len(result) < 1:
+            call_query("INSERT INTO charity_followers VALUES (?,?);",(charity, self._id))
         
     def unfollow(self, charity: int):
         '''
@@ -147,6 +179,16 @@ class User:
             self._follows.remove(charity)
             return True
         pass
+
+    def following(self):
+        '''
+        This function returns the number of charities that are being followed by the user.
+        No arguments are passed to this function."
+        '''
+        result = call_query("SELECT charity_id FROM charity_followers WHERE user_id = ?;",(self._id,))
+        charities = [Charity.get(row[0]) for row in result]
+        return charities
+            
 
     def hasDonated(self, charity: int): #NOT MVP
         '''
@@ -168,7 +210,33 @@ class User:
         block
         '''
         pass
-    
+
+    def update(self):
+        if self._id is None:
+            raise NameError("user's id is None. User must have an ID (referring to the relevant database User entry) in order to have it's database values updated. If this is a new User, use User.save()")
+        call_query("UPDATE users SET username= ?, pword= ?, fname= ?, sname= ?, email= ? WHERE id = ?;", (self._username, self._password, self._fname, self._sname, self._email, self._id))
+        
+    @staticmethod
+    def get(ID):
+        results = call_query('''SELECT username,pword,fname,sname,email
+        FROM users
+        WHERE id = ?
+        ''',(ID,))
+        results = results[0]
+        c = User(results[0],results[1],results[2],results[3],results[4], ID)
+        return c
+
+    def save(self):
+        data = call_query("""
+            SELECT MAX(id)
+            FROM users;
+        """,'')
+        newid = data[0][0] + 1
+        call_query("""
+            INSERT INTO users(id,username,pword,fname,sname,email)
+            VALUES (?, ?, ?, '', '', ?);""", (newid, self._username, self._password, self._email,))
+        self._id = newid
+
 
 class Post:
 
@@ -234,17 +302,22 @@ def getTime() -> tuple:
     return (date, clock,)
 
 def getRandomCharity():
-    num = random.randint(0, numCharities-1)
-    x = call_query('SELECT id FROM charities WHERE id = ?', (num,))
-    
+    #print(charities)
+    numCharities = db.call_query('SELECT MAX(id) FROM charity', '')[0][0]
+    #print(numCharities)
+    num = random.randint(0, numCharities)
+    x = Charity.get(num)
+
     if not x:
         raise SyntaxError("HUGE PROBLEMS WITH READING DATABASE")
     else:
-        return charities[num].getInfo()
+        return x
 
-def loadDatabase(): pass
-    #charities
-    #users
+def loadDatabase():
+    array = db.call_query('SELECT * FROM charity', '')
+    for id, name, cat, bio, website, img, admin in array:
+        charity = Charity(name, bio, website)
+        charities.append(charity)
 
 def createUser(username, password, email):
     user = User(username, password, '', '', email)
@@ -259,6 +332,61 @@ def createCharity(name, story, website):
     charities.append(charity)
 
 
+
+
+if __name__ == "__main__":
+    print('== Getting Charity object (id=2)')
+    c = Charity.get(2)
+    print(c)
+    assert c._name == "Snail Helpline"
+    assert c._id == 2
+    print('== Updating Charity information')
+    c._websiteURL = "http://www.blah.com/"
+    c.update()
+    c = Charity.get(2)
+    assert c._websiteURL == "http://www.blah.com/"
+    c._websiteURL = "https://hotspicyme.me"
+    c.update()
+    print('== Getting User object (id=1)')
+    u = User.get(1)
+    print(u)
+    print('== User following Charity')
+    u.follow(c._id)
+    assert len(c.followers()) >= 0
+    assert len(u.following()) >= 0
+    result = call_query("SELECT 1 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?);",(2, 1))
+    print(result)
+    assert len(result) > 0
+
+    print('== Getting random charity')
+    r =  getRandomCharity()
+    print(r._name)
+
+    print('== Creating new Charity')
+    c = Charity('bob')
+    print('Saving object:', c._id)
+    c.save()
+    print('Saving object:', c._id)
+
+    print('== Creating new User')
+    c = User('John','','','','')
+    print('Saving object:', c._id)
+    c.save()
+    print('Saving object:', c._id)
+
+    print('== Updating User')
+    #Get and update User
+    u = User.get(3)
+    assert u._username == "percy"
+    u._fname = "Mr Snail"
+    u.update()
+    u = User.get(3)
+    assert u._fname == "Mr Snail"
+    u._fname = None
+    u.update()
+
+    
+    
 
 '''
 def validateURL(url):

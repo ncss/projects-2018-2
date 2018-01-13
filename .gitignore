@@ -3,3 +3,7 @@ __pycache__/
 *.swp
 database.db
 Backend.py
+index-editting.html
+
+# files written by tests
+eg1.html

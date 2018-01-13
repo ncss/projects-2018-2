@@ -10,17 +10,24 @@ def get_template(filename):
         return f.read()
 
 def home_page_handler(request):
-    #charity = backend_objects.getRandomCharity()
-    charity = backend_objects.Charity("Snail Helpline", "We help snails!!")
+    charity = backend_objects.getRandomCharity()
+    #charity = backend_objects.Charity("Snail Helpline", "We help snails!!", logoURL = "snail.jpg")
     context = {"charity": charity}
     request.write(templater.render("templates/index.html", context))
 
+
 def charity_profile_handler(request, charity_profile_id):
+    charity = backend_objects.Charity.get(charity_profile_id)
+    #charity = backend_objects.Charity("Snail Helpline", "We help snails!!", "https://en.wikipedia.org/wiki/Snail", logoURL = "snail.jpg")
     #request.write("Here is the profile for charity " + charity_profile_id + ".")
-    request.write(get_template("charity.html").format(charity_profile_id = charity_profile_id, charity_name = "charity_name", charity_logo = "charity_logo"))
+    #request.write(get_template("charity.html").format(charity_profile_id = charity_profile_id, charity_name = "charity_name", charity_logo = "charity_logo"))
+    context = {"charity": charity, "charity_profile_id": charity_profile_id}
+    request.write(templater.render("templates/charity.html", context))
+
 
 def create_charity_profile_handler(request):
-    pass
+    context = {}
+    request.write(templater.render("create_charity_profile.html", context))
     """Wanting to do something here but not sure what yet."""
 
 def post_create_profile_handler(request, charity_name, charity_logo):
@@ -30,7 +37,14 @@ def feed_handler(request):
     request.write(get_template("feed.html"))
 
 def swipe_screen_handler(request, charity_profile_id, swipe_direction):
-    request.write("You swiped " + swipe_direction + " for the Charity " + charity_profile_id)
+    #request.write("You swiped " + swipe_direction + " for the Charity " + charity_profile_id)
+
+    if swipe_direction == 'right':
+        user = backend_objects.User.get(0)
+        user.follow(charity_profile_id)
+        pass#numfollowed = numfollowed + 1
+    home_page_handler(request)
+
 
 def about_handler(request):
     request.write(get_template("about.html"))
@@ -44,6 +58,10 @@ def default_handler(request, method):
 
 """def next_charity_handler(request, )"""
 """ Sends user to new page and sends info to data base"""
+
+# \d+ is any number
+# .+ = any letter but preferably a name!!
+
 
 server = Server()
 server.register(r"/?", home_page_handler)

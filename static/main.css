@@ -85,6 +85,7 @@ a {
 	text-decoration: none;
 }
 
+
 .chinder-title {
 	display: inline-block;
 }
@@ -125,4 +126,14 @@ a {
 }
 #nav-menu-items i {
 	font-size: 50px;
+}
+.swipe_image_left {
+	transform: rotate(12deg) translateX(700px);
+	transition: transform 2s;
+}
+
+.swipe_image_right {
+	transform: rotate(-12deg) translateX(-700px);
+	transition: transform 2s;
+
 }
