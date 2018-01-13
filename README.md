@@ -18,4 +18,4 @@ Team members:
 * Breanna (aka Black Panther)
 * Ella (aka Posion Ivy)
 * Julia (aka Batman)
-* Karina 
+* Karina

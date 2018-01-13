@@ -4,17 +4,16 @@
 
 <link rel="stylesheet" href="/static/main.css">
 <link href="https://fonts.googleapis.com/css?family=Comfortaa|Lora|Montserrat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 
 </head>
 <body>
-  <header>
-  <h1>Equalibrium<a><img src="/static/images/HAM.png" class="hamburger"></a></h1>
-  <p class="white">name still work in progress 0-0</p>
-  </header>
 
+  {~ include templates/header.html ~}
 <p> <img src="{{charity._logo}}" ></p>
 
-<h1> {{charity_profile_id}} {{charity._name}} </h1>
+<h1>{{charity._name}} </h1>
 <section><h2> Bio </h2>
   <p> Follows: {{len(charity.followers())}} </p>
 <p>{{charity._story}}</p> </section>
