@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Home</title>
+<link href="/static/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Comfortaa|Lora|Montserrat" rel="stylesheet">
+</head>
+<body>
+<header>
+<h1>Equalibrium<a><img src="/static/images/HAM.png" class="hamburger"></a></h1>
+<p class="white">name still work in progress 0-0</p>
+</header>
+<section>
+<h2>Create new charity</h2>
+<form action="/post_create_profile" method = "POST">
+<input id="new_name" type="text" name = "new_name" placeholder="Enter name of charity"></input>
+<!-- <p><strong>Upload charity photo</strong><button>UPLOAD</button> <img id="uploaded_image" src="/static/images/preview.png"></p> -->
+<input id="logo_name" type="text" name = "logo_name" placeholder="Enter link to your Logo"></input>
+<textarea id="new_bio" type="text" placeholder="Enter charity Bio (205 word limit)"></textarea>
+<button type="submit" class="SUBMIT_BUTTON">SUBMIT</button>
+</form>
+</section>
+</body>
+</html>

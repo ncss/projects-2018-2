@@ -3,6 +3,7 @@ rightarrow.addEventListener("click", (ev) => {
   charitylogo.classList.add("swipe_image_left");
   setTimeout(() => {
     charitylogo.classList.remove("swipe_image_left");
+    window.location.replace("/");
   }, 2000);
   return false;
 });
@@ -12,6 +13,7 @@ leftarrow.addEventListener("click", (ev) => {
   charitylogo.classList.add("swipe_image_right");
   setTimeout(() => {
     charitylogo.classList.remove("swipe_image_right");
+    window.location.replace("/");
   }, 2000);
   return false;
 });

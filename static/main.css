@@ -35,7 +35,15 @@ h2 {
 	font-family: 'Lora', bold, serif;
 	font-size: 40px;
 }
-
+.white{
+	margin: 0;
+	margin-bottom: 15px;
+	margin-right: 20spx;
+	color: #ffde7e;
+	text-align: center;
+	font-family: 'Comfortaa', cursive;
+	font-size: 50px;
+}
 section {
 	background-color: lightblue;
 	display:inline-grid;
@@ -85,6 +93,22 @@ a {
 	text-decoration: none;
 }
 
+#leftarrow {
+	font-size: 50px;
+}
+
+#rightarrow {
+	font-size: 50px;
+}
+
+.swipebox{
+	display: grid;
+	grid-template-columns: 50% 50%;
+	text-align: center;
+	margin-top: 50px;
+	padding: 40px;
+	font-family: 'Montserrat', sans-serif;
+}
 
 .chinder-title {
 	display: inline-block;
@@ -136,4 +160,24 @@ a {
 	transform: rotate(-12deg) translateX(-700px);
 	transition: transform 2s;
 
+}
+
+button {
+	font-size: 30px;
+	margin: 6px;
+}
+
+textarea {
+	height: 500px;
+	margin: 6px;
+	font-size: 30px;
+}
+
+.SUBMIT_BUTTON {
+	color: blue;
+	background: skyblue;
+}
+
+input {
+	font-size: 30px;
 }

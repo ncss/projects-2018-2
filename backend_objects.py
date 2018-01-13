@@ -4,23 +4,23 @@ import datetime, time
 import sqlite3, os
 import db
 import random
+import hashlib
 from db import call_query
 
 
 
 numCharities = 0
 numUsers = 0
-charities = []
-users = []
 
 class Charity:
 
-    def __init__(self, charityName, story = '', websiteURL = '', logoURL = '', _id=None):
+    def __init__(self, charityName, story = '', websiteURL = '', logoURL = '', _id=None, tags=[]):
         self._name = charityName
         self._story = story
         self._websiteURL = websiteURL
         self._logo = logoURL
         self._id = _id
+        self._tags = tags
 
     def __str__(self):
         return "CHARITY OBJECT:( id:{} name:'{}' story[:10]:'{}' websiteURL:'{}' logoURL:'{}' )".format(self._id, self._name, self._story, self._websiteURL, self._logo)
@@ -80,6 +80,7 @@ class Charity:
             """, (newcharityid, self._name, self._story, self._websiteURL, self._logo,))
         self._id = newcharityid
 
+
     def post(self, title, content):
         _upload(title, content)
         ###
@@ -107,8 +108,6 @@ class User:
         self._sname = sname
         self._email = email
         #self._formerUsernames = []
-        self._friends = []
-        self._follows = []
         #self._charity = charID
         self._id = _id
         #self._blocked = []
@@ -116,41 +115,40 @@ class User:
     def __str__(self):
         return "USER OBJECT:( id:{} username:'{}' password:{} self._fname:'{}' self._sname:'{}' self._email:'{}' )".format(self._id, self._username, self._password, self._fname, self._sname, self._email)
         
-    def addFriend(self, username): #NOT MVP
+    def addFriend(self, userID): #NOT MVP
         '''
         This function adds a friend to the person's friend list
         Firstly checking whether it is currently in the friends list
         before making its decision on whether to add the friend.
         '''
-        if not isFriend(username):
-            self._friends.append(username)
-            return True
-        else:
-            return False
+        result = call_query("SELECT 1 FROM friends WHERE (user_id1 = ?) AND (user_id2 = ?);",(self._id, userID,))
+        if len(result) < 1:
+            call_query("INSERT INTO friends VALUES (?,?);",(self._id, userID,))
 
-    def removeFriend(self, username): #NOT MVP
-        '''
-        This function removes a friend from the person's friends list
-        Firstly checking whether it is currently in the friends list
-        before making its decision on whether to add the friend.
-        '''
-        if isFriend(username):
-            self._friends.remove(username)
-            return True
-        else:
-            return False
-
-    def isFriend(self, username: str):
+    def removeFriend(self, userID): #NOT MVP
         
-        friend = call_query('SELECT user FROM friends WHERE ? = user', (self._username,))
+        result = call_query("DELETE FROM friends WHERE (user_id1 = ?) AND (user_id2 = ?)", (self._id, userID,))
 
-        if username in friend:
+    def isFriend(self, userID):
+        
+        friend = call_query('SELECT 10 FROM friends WHERE (user_id1 = ?) AND (user_id2 = ?)', (self._id, userID))
+        print(friend)
+        if len(friend) > 0:
             return True
         else:
             return False
 
+    def friends(self):
+        '''
+        This function returns a list of all the user's friends.
+        No arguments are passsed to this function.
+        '''
+        result = call_query("SELECT user_id2 FROM friends WHERE (user_id1 = ?);", (self._id, ))
+        user_friends = [User.get(row[0]) for row in result]
+        return user_friends
 
-    def controlsCharity(self, charity: str):
+
+    def controlsCharity(self, charity: int):
 
         char = call_query('SELECT user FROM charities WHERE ? = user', (self._username,))
         
@@ -168,17 +166,19 @@ class User:
         if len(result) < 1:
             call_query("INSERT INTO charity_followers VALUES (?,?);",(charity, self._id))
         
-    def unfollow(self, charity: int):
+    def unfollow(self, charID: int):
         '''
         Database
         '''
+        result = call_query("DELETE FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?)", (charID, self._id,))
 
-        if charity not in self._follows:
-            return False
-        else:
-            self._follows.remove(charity)
+    def isFollowing(self, charID):
+
+        charity = call_query('SELECT 10 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?)', (charID, self._id,))
+        if len(charity) > 0:
             return True
-        pass
+        else:
+            return False
 
     def following(self):
         '''
@@ -188,6 +188,7 @@ class User:
         result = call_query("SELECT charity_id FROM charity_followers WHERE user_id = ?;",(self._id,))
         charities = [Charity.get(row[0]) for row in result]
         return charities
+            
             
 
     def hasDonated(self, charity: int): #NOT MVP
@@ -222,6 +223,8 @@ class User:
         FROM users
         WHERE id = ?
         ''',(ID,))
+        if not results:
+            return None
         results = results[0]
         c = User(results[0],results[1],results[2],results[3],results[4], ID)
         return c
@@ -234,8 +237,34 @@ class User:
         newid = data[0][0] + 1
         call_query("""
             INSERT INTO users(id,username,pword,fname,sname,email)
-            VALUES (?, ?, ?, '', '', ?);""", (newid, self._username, self._password, self._email,))
+            VALUES (?, ?, ?, '', '', ?);""", (newid, self._username, hashlib.sha256(self._password.encode()).hexdigest(), self._email,))
         self._id = newid
+
+    def getCharityFriends(self, charID):
+        c = Charity.get(charID)
+        people = c.followers()
+        return [x for x in people if self.isFriend(x._id)]
+
+    @staticmethod
+    def login(username, password):
+        '''
+        Takes two strings and compares the hashed password with the database,
+        returning the object
+         of that user.
+        '''
+        h = hashlib.sha256()
+        h.update(password.encode())
+        data = call_query("""SELECT id FROM users WHERE username = ? and pword = ?
+
+            """,(username, h.hexdigest()))
+        
+        if len(data):
+            return User.get(data[0][0])
+        else:
+            return None
+
+
+
 
 
 class Post:
@@ -313,23 +342,21 @@ def getRandomCharity():
     else:
         return x
 
+'''
 def loadDatabase():
     array = db.call_query('SELECT * FROM charity', '')
     for id, name, cat, bio, website, img, admin in array:
         charity = Charity(name, bio, website)
         charities.append(charity)
+'''
 
-def createUser(username, password, email):
-    user = User(username, password, '', '', email)
-    db.call_insert_users(username, password, email)
-    numUsers += 1
-    users.append(user)
+def createUser(username, password, fname, sname, email):
+    user = User(username, password, fname, sname, email)
+    user.save()
 
-def createCharity(name, story, website):
-    charity = Charity(name, story, website, '')
-    db.call_insert_charities(numCharities, name, story, website)
-    numCharities += 1
-    charities.append(charity)
+def createCharity(name, story, website, logo):
+    charity = Charity(name, story, website, logo)
+    charity.save()
 
 
 
@@ -350,14 +377,32 @@ if __name__ == "__main__":
     print('== Getting User object (id=1)')
     u = User.get(1)
     print(u)
-    print('== User following Charity')
+    print('== User following Charity ==')
+    print(u.isFollowing(c._id))
     u.follow(c._id)
+    print(u.isFollowing(c._id))
+
     assert len(c.followers()) >= 0
     assert len(u.following()) >= 0
     result = call_query("SELECT 1 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?);",(2, 1))
     print(result)
     assert len(result) > 0
 
+    u.unfollow(c._id)
+    print(u.isFollowing(c._id))
+    assert len(c.followers()) >= 0
+    assert len(u.following()) >= 0
+    print('== User befriending User')
+    print(u.isFriend(3))
+    u.addFriend(3)
+    print('==Returning list of friends==')
+    print(u.friends())
+    assert u.friends()[0]._id == 3
+    print(u.isFriend(3))
+    u.removeFriend(3)
+    print(u.isFriend(3))
+    print('==Returning list of friends==')
+    print(u.friends())
     print('== Getting random charity')
     r =  getRandomCharity()
     print(r._name)
@@ -369,10 +414,16 @@ if __name__ == "__main__":
     print('Saving object:', c._id)
 
     print('== Creating new User')
-    c = User('John','','','','')
+    c = User('John','trident','','','')
     print('Saving object:', c._id)
     c.save()
     print('Saving object:', c._id)
+    c = User.get(c._id)
+    assert c._password == 'fb2b9bb163acf7e3ad50dd8d950b56ba0065d96aedb36ffcaa87dc44b9000f2a'
+
+    print('== Testing login')
+    assert User.login('foo', 'trident')._id == 0
+    assert User.login('foo', 'satgsweg') == None
 
     print('== Updating User')
     #Get and update User
@@ -384,6 +435,20 @@ if __name__ == "__main__":
     assert u._fname == "Mr Snail"
     u._fname = None
     u.update()
+
+
+    print('== Testing Charity Friends ==')
+    u = User.get(0)
+    print(u.getCharityFriends(0))
+    u.addFriend(1)
+    u1 = User.get(1)
+    u1.follow(0)
+    print(u.getCharityFriends(0))
+    assert len(u.getCharityFriends(0)) > 0
+    u1.unfollow(0)
+    print(u.getCharityFriends(0))
+    assert len(u.getCharityFriends(0)) == 0
+
 
     
     
