@@ -12,11 +12,30 @@ ___//_(_)_(_)_(_)___\__/_____(_)_(_)_(_)
 
 Syntax:
 
+STATEMENT:
     {{text}}
+    
+    'text' will be evaluated in python with given context from DB
+IF STATEMENT:
+    {% if condition %}
+    STUFF
+    {%end if%}
 
-2 curly boys on each end mark a /node/ where 'text' will be evaluated in python with given context from DB
+    STUFF will be run if 'conditon'is true
+FOR LOOP
+    {$For item in list$}
+    STUFF
+    {$end for$}
 
-    {^IF(statement)}      {^END}
+    STUFF will run for each 'item' in 'list'.
+
+
+Template Team:
+
+Shovel "Constantine" Quazi
+Ollie "Starfyre"
+Ethan "Aquaman"
+Jackson "Superman" 
 
     
 """
