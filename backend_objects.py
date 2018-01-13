@@ -22,6 +22,8 @@ class Charity:
         self._logo = logoURL
         self._id = _id
 
+    def __str__(self):
+        return "CHARITY OBJECT:( id:{} name:'{}' story[:10]:'{}' websiteURL:'{}' logoURL:'{}' )".format(self._id, self._name, self._story, self._websiteURL, self._logo)
         
     def editProfile(self, charityName, story, websiteURL):
         self._name = charityName
@@ -102,6 +104,8 @@ class User:
         self._id = _id
         #self._blocked = []
 
+    def __str__(self):
+        return "USER OBJECT:( id:{} username:'{}' password:{} self._fname:'{}' self._sname:'{}' self._email:'{}' )".format(self._id, self._username, self._password, self._fname, self._sname, self._email)
         
     def addFriend(self, username): #NOT MVP
         '''
@@ -309,12 +313,10 @@ def createCharity(name, story, website):
     charities.append(charity)
 
 if __name__ == "__main__":
-    print('== Getting Charity object')
+    print('== Getting Charity object (id=2)')
     c = Charity.get(2)
-    print(c._name)
-    assert c._name == "Snail Helpline"
     print(c)
-    print(c._id)
+    assert c._name == "Snail Helpline"
     assert c._id == 2
     print('== Updating Charity information')
     c._websiteURL = "http://www.blah.com/"
@@ -323,8 +325,9 @@ if __name__ == "__main__":
     assert c._websiteURL == "http://www.blah.com/"
     c._websiteURL = "https://hotspicyme.me"
     c.update()
-    print('== Getting User object')
+    print('== Getting User object (id=1)')
     u = User.get(1)
+    print(u)
     print('== User following Charity')
     u.follow(c._id)
     result = call_query("SELECT 1 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?);",(2, 1))
