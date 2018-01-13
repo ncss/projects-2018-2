@@ -98,10 +98,6 @@ article {
 	text-align: center;
 }
 
-.profile_link:hover {
-	background-color: #4d85e6;
-}
-
 .profile_link a:visited {
 	color: white;
 }
@@ -122,8 +118,24 @@ a {
 	font-size: 50px;
 }
 
+#leftarrow:link {
+	color: black;
+}
+
+#leftarrow:visited {
+	color: black;
+}
+
 #rightarrow {
 	font-size: 50px;
+}
+
+#rightarrow:link {
+	color: black;
+}
+
+#rightarrow:visited {
+	color: black;
 }
 
 .swipebox{
