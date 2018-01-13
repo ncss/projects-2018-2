@@ -142,14 +142,12 @@ class User:
 
     def follow(self, charity: int):
         '''
-        Database
+        This function adds the ID of the user and the id of the charity that the user has chosen to follow into the charity_followers table.
+        Pass the ID of the charity, not the charity object.
         '''
-        if charity in self._follows:
-            return False
-        else:
-            self._follows.append(charity)
-            return True
-
+        result = call_query("SELECT 1 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?);",(charity, self._id))
+        if len(result) < 1:
+            call_query("INSERT INTO charity_followers VALUES (?,?);",(charity, self._id))
         
     def unfollow(self, charity: int):
         '''
@@ -305,26 +303,38 @@ def createCharity(name, story, website):
     charities.append(charity)
 
 if __name__ == "__main__":
+    print('== Getting Charity object')
     c = Charity.get(2)
     print(c._name)
     assert c._name == "Snail Helpline"
     print(c)
     print(c._id)
     assert c._id == 2
+    print('== Getting User object')
+    u = User.get(1)
+    print('== User following Charity')
+    u.follow(c._id)
+    result = call_query("SELECT 1 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?);",(2, 1))
+    print(result)
+    assert len(result) > 0
 
+    print('== Getting random charity')
     r =  getRandomCharity()
     print(r._name)
 
+    print('== Creating new Charity')
     c = Charity('bob')
     print('Saving object:', c._id)
     c.save()
     print('Saving object:', c._id)
 
+    print('== Creating new User')
     c = User('John','','','','')
     print('Saving object:', c._id)
     c.save()
     print('Saving object:', c._id)
 
+    print('== Updating User')
     #Get and update User
     u = User.get(3)
     assert u._username == "percy"
