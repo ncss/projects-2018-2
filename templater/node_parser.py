@@ -138,10 +138,10 @@ def parse(text):
   for token in tokens:
     if token[:2] == "{{" and token[-2:] == "}}":
       token = token[2:-2].strip()
-      parsed.append(node.ExprNode(token))
+      parsed.append(nodes.ExprNode(token))
     else:
-      parsed.append(node.TextNode(token))
-  groupNode = node.GroupNode(parsed)
+      parsed.append(nodes.TextNode(token))
+  groupNode = nodes.GroupNode(parsed)
   return groupNode
 
 if __name__ == '__main__':
