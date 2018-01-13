@@ -4,7 +4,7 @@ rightarrow.addEventListener("click", (ev) => {
   setTimeout(() => {
     charitylogo.classList.remove("swipe_image_left");
     window.location.replace("/");
-  }, 2000);
+  }, 1000);
   return false;
 });
 
@@ -14,6 +14,6 @@ leftarrow.addEventListener("click", (ev) => {
   setTimeout(() => {
     charitylogo.classList.remove("swipe_image_right");
     window.location.replace("/");
-  }, 2000);
+  }, 1000);
   return false;
 });

@@ -19,10 +19,12 @@ header {
 	background-color: #1F64DD;
 	text-align: center;
 	width: 85%;
-	margin-left:7.5%;
 	margin-bottom: 5px;
-	margin-top: 5px;
-	padding: 0;
+	margin-top: 20px;
+	padding-left: 73px;
+	padding-right: 73px;
+	padding-top: 35px;
+	padding-bottom: 30px;
 }
 
 h1 {
@@ -38,26 +40,25 @@ h2 {
 .white{
 	margin: 0;
 	margin-bottom: 15px;
-	margin-right: 20spx;
+	margin-right: 20px;
 	color: #ffde7e;
 	text-align: center;
 	font-family: 'Comfortaa', cursive;
-	font-size: 50px;
+	font-size: 40px;
 }
 section {
 	background-color: lightblue;
 	display:inline-grid;
 	width: 85%;
-	margin-left:7.5%;
 	margin-bottom: 5px;
-	margin-top: 5px;
-	padding: 0;
+	padding-left: 73px;
+	padding-right: 73px;
 	padding-top: 5px;
 }
 
 p {
 	font-family: 'Montserrat', sans-serif;
-	text-align: center;
+	text-align: justify;
 	font-size: 20px;
 	margin:5px;
 }
@@ -69,7 +70,8 @@ h1,h2,h3 {
 .icon {
 	width: 40%;
 	margin: 90px;
-	margin-top: 40px;
+	margin-top: 50px;
+	padding: 40px;
 }
 
 .center {
@@ -103,9 +105,13 @@ a {
 	display: grid;
 	grid-template-columns: 50% 50%;
 	text-align: center;
-	margin-top: 50px;
+	margin-bottom: 50px;
 	padding: 40px;
 	font-family: 'Montserrat', sans-serif;
+}
+
+.imgbox {
+	height: 500px;
 }
 
 .chinder-title {
@@ -122,6 +128,11 @@ a {
 		color:white;
 }
 
+.displaybox{
+	height: 850px;
+	margin-top: 15px;
+	margin-bottom: 20px;
+}
 
 #nav-menu-items {
 	display : block;
@@ -152,12 +163,12 @@ a {
 }
 .swipe_image_left {
 	transform: rotate(12deg) translateX(700px);
-	transition: transform 2s;
+	transition: transform 1s;
 }
 
 .swipe_image_right {
 	transform: rotate(-12deg) translateX(-700px);
-	transition: transform 2s;
+	transition: transform 1s;
 
 }
 
