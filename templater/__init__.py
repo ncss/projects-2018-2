@@ -12,7 +12,13 @@ ___//_(_)_(_)_(_)___\__/_____(_)_(_)_(_)
 
 Syntax:
 
+    {{text}}
 
+2 curly boys on each end mark a /node/ where 'text' will be evaluated in python with given context from DB
+
+    {^IF(statement)}      {^END}
+
+    
 """
 
 # Relative imports are hard...

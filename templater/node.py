@@ -5,6 +5,16 @@
 >>> node_3 = GroupNode([node_1,node_2])
 >>> node_3.translate(context)
 'TEST 1 TEST 2'
+>>> forList = '[1,2,3,4,5,6,7,8,9]'
+>>> del context["variable"]
+>>> node_4 = ForNode(forList, "variable", node_3)
+>>> node_4.translate(context)
+'TEST 1 1TEST 1 2TEST 1 3TEST 1 4TEST 1 5TEST 1 6TEST 1 7TEST 1 8TEST 1 9'
+>>> if_node = IfNode("x == 3", node_3)
+>>> if_node.translate({'x': 3, 'variable': 'TEST 2'})
+'TEST 1 TEST 2'
+>>> if_node.translate({'x': 2, 'variable': 'TEST 2'})
+''
 """
 
 
@@ -35,17 +45,30 @@ class ExprNode(Node):
 class IfNode(Node):
     """An IfNode contains a statement and the required node"""
     def __init__(self,condition,statement):
-        self._cond = eval(condition)
+        self._cond = condition
         self._stat = statement
     def translate(self,context):
-        if self._cond:
-            return statement.translate(context)
+        if eval(self._cond,context):
+            return self._stat.translate(context)
         else:
             return ''
+class ForNode(Node):
+    """A For Node that contains a statement and the required node"""
 
+    def __init__(self,iterable,item_name,statement):
+        self._iter = iterable
+        self._stat = statement
+        self._name = item_name
 
-        
-
+    def translate(self,context):
+        return_string = ''
+        for item in eval(self._iter,context):
+            context[self._name] = item
+            return_string += self._stat.translate(context)
+              
+        del context[self._name]
+        return return_string
 if __name__ == '__main__':
     import doctest
-    doctest.testmod()
+    fail_count, test_count = doctest.testmod()
+    print('Passed', test_count - fail_count, 'of', test_count, 'tests.')
