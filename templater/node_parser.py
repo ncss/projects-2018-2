@@ -114,34 +114,13 @@ class Parser():
 
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
 def parse(text):
   tokens = tokenise(text)
-  parsed = []
-  for token in tokens:
-    if token[:2] == "{{" and token[-2:] == "}}":
-      token = token[2:-2].strip()
-      parsed.append(nodes.ExprNode(token))
-    else:
-      parsed.append(nodes.TextNode(token))
-  groupNode = nodes.GroupNode(parsed)
+  p = Parser(tokens)
+  
+  groupNode = p.parse_group()
+  if not p.end():
+    raise SyntaxError("Unexpected token: " + str(p.peek()))
   return groupNode
 
 if __name__ == '__main__':
