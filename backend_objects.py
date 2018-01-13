@@ -88,7 +88,16 @@ class Charity:
         ''' something goes here'''
         some_variable = Post(title, content, self._name)
 
-    
+    def followers(self):
+        data = call_query("""
+                SELECT user_id FROM charity_followers WHERE ? = charity_id
+                """,(self._id,))
+        users = []
+        for row in data:
+            users.append(User.get(row[0]))
+
+        return users
+
 class User:
 
     def __init__(self, username, password, fname, sname, email, _id=None):
@@ -312,6 +321,9 @@ def createCharity(name, story, website):
     numCharities += 1
     charities.append(charity)
 
+
+
+
 if __name__ == "__main__":
     print('== Getting Charity object (id=2)')
     c = Charity.get(2)
@@ -330,6 +342,7 @@ if __name__ == "__main__":
     print(u)
     print('== User following Charity')
     u.follow(c._id)
+    assert len(c.followers()) >= 0
     result = call_query("SELECT 1 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?);",(2, 1))
     print(result)
     assert len(result) > 0
