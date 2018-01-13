@@ -69,6 +69,11 @@ def about_handler(request):
 def user_profile_handler(request, user_profile_id, user_profile_name):
     #request.write("Here is " + user_profile_id + " aka " + user_profile_name)
     request.write(get_template("user.html").format(user_profile_id = user_profile_id, user_profile_name = user_profile_name))
+
+def charity_list_handler(request):
+    context = {}
+    request.write(templater.render("templates/charity_list.html", context))
+
 def default_handler(request, method):
     request.write("Invaild url silly!")
     """Redirects all invalid urls to this"""
@@ -91,5 +96,6 @@ server.register(r"/user_profile/(\d+)/(.+)/?", user_profile_handler)
 server.register(r"/create_user_profile/?", create_user_profile_handler)
 server.register(r"/post_create_user_profile/?", post_create_user_profile_handler)
 server.register(r"/user/?", user_handler)
+server.register(r"/charity_list/?", charity_list_handler)
 server.set_default_handler(default_handler)
 server.run()
