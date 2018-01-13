@@ -15,12 +15,12 @@ users = []
 
 class Charity:
 
-    def __init__(self, charityName, story = '', websiteURL = '', logoURL = ''):
+    def __init__(self, charityName, story = '', websiteURL = '', logoURL = '', _id=None):
         self._name = charityName
         self._story = story
         self._websiteURL = websiteURL
         self._logo = logoURL
-        self._id = None
+        self._id = _id
 
         
     def editProfile(self, charityName, story, websiteURL):
@@ -54,7 +54,7 @@ class Charity:
         WHERE id = ?
         ''',(ID,))
         results = results[0]
-        c = Charity(results[0],results[1],results[2],results[3])
+        c = Charity(results[0],results[1],results[2],results[3], ID)
         return c
 
     def save(self):
@@ -83,7 +83,7 @@ class Charity:
     
 class User:
 
-    def __init__(self, username, password, fname, sname, email):
+    def __init__(self, username, password, fname, sname, email, _id=None):
         self._username = username
         self._password = password
         self._fname = fname
@@ -93,7 +93,7 @@ class User:
         self._friends = []
         self._follows = []
         #self._charity = charID
-        self._id = None
+        self._id = _id
         #self._blocked = []
 
         
@@ -184,6 +184,11 @@ class User:
         '''
         pass
 
+    def update(self):
+        if self._id is None:
+            raise NameError("user's id is None. User must have an ID (referring to the relevant database User entry) in order to have it's database values updated. If this is a new User, use User.save()")
+        call_query("UPDATE users SET username= ?, pword= ?, fname= ?, sname= ?, email= ? WHERE id = ?;", (self._username, self._password, self._fname, self._sname, self._email, self._id))
+        
     @staticmethod
     def get(ID):
         results = call_query('''SELECT username,pword,fname,sname,email
@@ -191,7 +196,7 @@ class User:
         WHERE id = ?
         ''',(ID,))
         results = results[0]
-        c = User(results[0],results[1],results[2],results[3],results[4])
+        c = User(results[0],results[1],results[2],results[3],results[4], ID)
         return c
 
     def save(self):
@@ -303,6 +308,9 @@ if __name__ == "__main__":
     c = Charity.get(2)
     print(c._name)
     assert c._name == "Snail Helpline"
+    print(c)
+    print(c._id)
+    assert c._id == 2
 
     r =  getRandomCharity()
     print(r._name)
@@ -316,6 +324,17 @@ if __name__ == "__main__":
     print('Saving object:', c._id)
     c.save()
     print('Saving object:', c._id)
+
+    #Get and update User
+    u = User.get(3)
+    assert u._username == "percy"
+    u._fname = "Mr Snail"
+    u.update()
+    u = User.get(3)
+    assert u._fname == "Mr Snail"
+    u._fname = None
+    u.update()
+    
 
 '''
 def validateURL(url):
