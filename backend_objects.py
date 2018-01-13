@@ -493,7 +493,7 @@ if __name__ == "__main__":
     c.save()
     print('Saving object:', c._id)
 
-    print('== Creating new User')
+    '''print('== Creating new User')
     c = User('John','trident','','','')
     print('Saving object:', c._id)
     c.save()
@@ -504,7 +504,7 @@ if __name__ == "__main__":
     print('== Testing login')
     assert User.login('foo', 'trident')._id == 0
     assert User.login('foo', 'satgsweg') == None
-
+    '''
     print('== Updating User')
     #Get and update User
     u = User.get(3)

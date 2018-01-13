@@ -4,12 +4,14 @@ import templater
 from tornado.ncss import Server, ncssbook_log
 
 TEMPLATE_DIR = "templates"
-
+aux = 0
 def get_template(filename):
     with open(os.path.join(TEMPLATE_DIR, filename)) as f:
         return f.read()
 
 def home_page_handler(request):
+    global aux
+    request.set_secure_cookie("id", str(aux)) # until we have a login page
     charity = backend_objects.getRandomCharity()
     #charity = backend_objects.Charity("Snail Helpline", "We help snails!!", logoURL = "snail.jpg")
     context = {"charity": charity}
@@ -44,11 +46,14 @@ def feed_handler(request):
 
 def swipe_screen_handler(request, charity_profile_id, swipe_direction):
     #request.write("You swiped " + swipe_direction + " for the Charity " + charity_profile_id)
-
+    global aux
+    request.set_secure_cookie("id", str(aux))
     if swipe_direction == 'right':
-        user = backend_objects.User.get(0)
-        user.follow(charity_profile_id)
-        pass#numfollowed = numfollowed + 1
+        if request.get_secure_cookie("id"):
+            cookie = request.get_secure_cookie("id").decode()
+            user = backend_objects.User.get(int(cookie))
+            user.follow(charity_profile_id)
+            #numfollowed = numfollowed + 1
     home_page_handler(request)
 
 def create_user_profile_handler(request):
@@ -56,9 +61,22 @@ def create_user_profile_handler(request):
     request.write(templater.render("templates/user_sign_up.html", context))
 
 def post_create_user_profile_handler(request):
-    user_profile_fname = request.get_field("fname")
-    context = {}
-    request.write("You have created a user page with the name: " + str(user_profile_fname))
+    global aux
+    username = request.get_field("username")
+    fname = request.get_field("fname")
+    sname = request.get_field("sname")
+    email = request.get_field("email")
+    password = request.get_field("pass")
+    cpassword = request.get_field("cpass")
+    if password == cpassword: 
+        c = backend_objects.User(username, password, fname, sname, email)
+        c.save()
+        aux = c._id
+        request.set_secure_cookie("id", str(aux))
+        context = {}
+        request.write("You have created a user page with the name: " + str(c._username) + " and id " + str(c._id))
+    else:
+        request.write("Passwords do not match")
 
 def user_handler(request):
     request.write("Logged|Not logged in.")
