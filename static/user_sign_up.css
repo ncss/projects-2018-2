@@ -5,11 +5,8 @@ input {
 	background:;
 	margin-left: 50px;
 	margin-right:50px;
-	border-bottom: 2px navy;
-}
-
-.body {
-	background-color: white;
+	border: none;
+	border-bottom: 2px solid blue;
 }
 
 .forms {
@@ -17,14 +14,10 @@ input {
 	margin-left: 8%;
 	margin-right: 8%;
 	text-align: center;
+  padding-bottom: 20px;
 }
 
 .title {
 	font-family: sans-serif;
 	color: black;
 }
-
-.fname_input {
-	margin-left: 185px;
-}
-
