@@ -87,3 +87,13 @@ article {
 a {
 	text-decoration: none;
 }
+
+.swipe_image_left {
+	transform: rotate(12deg) translateX(700px);
+	transition: transform 2s;
+}
+
+.swipe_image_right {
+	transform: rotate(-12deg) translateX(-700px);
+	transition: transform 2s;
+}
