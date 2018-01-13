@@ -32,10 +32,11 @@ def create_charity_profile_handler(request):
 
 def post_create_charity_profile_handler(request):
     charity_name = request.get_field('new_name')
-    chairty_logo_name = request.get_field("logo_name")
+    charity_logo_name = request.get_field("logo_name")
     charity_new_bio = request.get_field("new_bio")
-    request.write("You have added a Charity with this name " + charity_name + ". Your logo name is: " + chairty_logo_name + ". And your bio is: " + charity_new_bio)
-
+    request.write("You have added a Charity with this name " + charity_name + ". Your logo name is: " + charity_logo_name + ". And your bio is: " + charity_new_bio)
+    new_charity = backend_objects.Charity(charity_name,story=charity_new_bio,logoURL=charity_logo_name)
+    new_charity.save()
 def feed_handler(request):
     context = {}
     request.write(templater.render("templates/feed.html", context))
