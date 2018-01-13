@@ -1,0 +1,139 @@
+/* CSS Document */
+body {
+	background-color: white;
+}
+
+.hamburger {
+	width: 100px;
+	height: 100px;
+	float: right;
+	background: skyblue;
+	border-bottom: 2px blue solid;
+	border-left: 2px blue solid;
+	border-bottom-left-radius: 10px;
+	margin: 0;
+	display: inline-block;
+}
+
+header {
+	background-color: #1F64DD;
+	text-align: center;
+	width: 85%;
+	margin-left:7.5%;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	padding: 0;
+}
+
+h1 {
+	margin: 0;
+	color: #ffde7e;
+	font-family: 'Comfortaa', cursive;
+	font-size: 100px;
+}
+h2 {
+	font-family: 'Lora', bold, serif;
+	font-size: 40px;
+}
+
+section {
+	background-color: lightblue;
+	display:inline-grid;
+	width: 85%;
+	margin-left:7.5%;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	padding: 0;
+	padding-top: 5px;
+}
+
+p {
+	font-family: 'Montserrat', sans-serif;
+	text-align: center;
+	font-size: 20px;
+	margin:5px;
+}
+
+h1,h2,h3 {
+	text-align: center;
+}
+
+.icon {
+	width: 40%;
+	margin: 90px;
+	margin-top: 40px;
+}
+
+.center {
+	text-align: center;
+	font-size: 100px;
+	padding: 0;
+	margin: 0;
+}
+
+article {
+	background-color: skyblue;
+	border: 2px solid aqua;
+	margin: 15px;
+}
+
+.white {
+	color: white;
+}
+
+a {
+	text-decoration: none;
+}
+
+
+.chinder-title {
+	display: inline-block;
+}
+#charity_name{
+	font-size: 100px;
+}
+
+.main-menu .material-icons {
+    font-size: 100px !important;
+    float: right !important;
+		background : #1F64DD;
+}
+
+
+#nav-menu-items {
+	display : block;
+	background : grey;
+	position:fixed;
+	bottom: 0px;
+	left: 100%;
+	width: 50%;
+	height: 100%;
+  transition: left 0.3s ease;
+	margin-left: 500px;
+}
+#nav-menu-items:target {
+	display:block;
+	left: 0%;
+
+
+}
+#nav-menu-items a {
+	display:block;
+	font-size:50px;
+	color: white;
+	padding:50px ;
+
+}
+#nav-menu-items i {
+	font-size: 50px;
+}
+.swipe_image_left {
+	transform: rotate(12deg) translateX(700px);
+	transition: transform 2s;
+}
+
+.swipe_image_right {
+	transform: rotate(-12deg) translateX(-700px);
+	transition: transform 2s;
+
+}
