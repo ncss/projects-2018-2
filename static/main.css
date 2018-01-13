@@ -37,6 +37,12 @@ h2 {
 	font-family: 'Lora', bold, serif;
 	font-size: 40px;
 }
+h2.page {
+	margin:40px;
+	font-family: 'Comfortaa', cursive;
+	font-size: 70px;
+}
+
 .white{
 	margin: 0;
 	margin-bottom: 15px;
