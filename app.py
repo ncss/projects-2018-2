@@ -18,11 +18,13 @@ def home_page_handler(request):
 
 def charity_profile_handler(request, charity_profile_id):
     charity = backend_objects.Charity.get(charity_profile_id)
+    numfollowed = 5 #backend_objects.Charity.followed(charity_profile_id)
     #charity = backend_objects.Charity("Snail Helpline", "We help snails!!", "https://en.wikipedia.org/wiki/Snail", logoURL = "snail.jpg")
     #request.write("Here is the profile for charity " + charity_profile_id + ".")
     #request.write(get_template("charity.html").format(charity_profile_id = charity_profile_id, charity_name = "charity_name", charity_logo = "charity_logo"))
-    context = {"charity": charity, "charity_profile_id": charity_profile_id}
+    context = {"charity": charity, "charity_profile_id": charity_profile_id, "numfollowed" : numfollowed}
     request.write(templater.render("templates/charity.html", context))
+
 
 def create_charity_profile_handler(request):
     pass
@@ -35,7 +37,13 @@ def feed_handler(request):
     request.write(get_template("feed.html"))
 
 def swipe_screen_handler(request, charity_profile_id, swipe_direction):
-    request.write("You swiped " + swipe_direction + " for the Charity " + charity_profile_id)
+    #request.write("You swiped " + swipe_direction + " for the Charity " + charity_profile_id)
+
+    if swipe_direction == 'right':
+        user = backend_objects.User.get(0)
+        user.follow(charity_profile_id)
+        pass#numfollowed = numfollowed + 1
+    home_page_handler(request)
 
 
 def about_handler(request):
