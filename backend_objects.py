@@ -2,9 +2,9 @@ from tornado.ncss import Server, ncssbook_log
 import re
 import datetime, time
 import sqlite3, os
-#import db
+import db
 import random
-
+from db import call_query
 
 
 
@@ -47,6 +47,16 @@ class Charity:
         #webURL = info[]
 
         return (name, story, webURL, logoURL,)
+
+    @staticmethod
+    def get(ID):
+        results = call_query('''SELECT name,story,charity_website_url,image_src
+        FROM charity
+        WHERE id = ?
+        ''',(ID,))
+        results = results[0]
+        c = Charity(results[0],results[1],results[2],results[3])
+        return c
 
     def post(self, title, content):
         _upload(title, content)
@@ -158,6 +168,16 @@ class User:
         block
         '''
         pass
+
+    @staticmethod
+    def get(ID):
+        results = call_query('''SELECT username,pword,fname,sname,email
+        FROM users
+        WHERE id = ?
+        ''',(ID,))
+        results = results[0]
+        c = User(results[0],results[1],results[2],results[3],results[4])
+        return c
     
 
 class Post:
@@ -224,17 +244,22 @@ def getTime() -> tuple:
     return (date, clock,)
 
 def getRandomCharity():
-    num = random.randint(0, numCharities-1)
-    x = call_query('SELECT id FROM charities WHERE id = ?', (num,))
-    
+    print(charities)
+    numCharities = db.call_query('SELECT MAX(id) FROM charity', '')[0][0]
+    print(numCharities)
+    num = random.randint(0, numCharities)
+    x = Charity.get(num)
+
     if not x:
         raise SyntaxError("HUGE PROBLEMS WITH READING DATABASE")
     else:
-        return charities[num].getInfo()
+        return x
 
-def loadDatabase(): pass
-    #charities
-    #users
+def loadDatabase():
+    array = db.call_query('SELECT * FROM charity', '')
+    for id, name, cat, bio, website, img, admin in array:
+        charity = Charity(name, bio, website)
+        charities.append(charity)
 
 def createUser(username, password, email):
     user = User(username, password, '', '', email)
