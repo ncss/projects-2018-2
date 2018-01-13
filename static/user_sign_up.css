@@ -1,0 +1,28 @@
+input {
+	width:50%;
+	padding:6px, 10px;
+	margin: 8px;
+	background:;
+	margin-left: 50px;
+	margin-right:50px;
+	border-bottom: 2px navy;
+}
+
+.body {
+	background-color: white;
+}
+
+.forms {
+	background-color: #add8e6;
+	margin-left: 8%;
+	margin-right: 8%;
+	text-align: center;
+}
+
+h4 {
+	font-family: sans-serif;
+}
+
+.fname_input {
+	margin-left: 175px;
+}
