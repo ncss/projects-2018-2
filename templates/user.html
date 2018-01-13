@@ -18,15 +18,18 @@
     </section>
 
     <section>
-      <div class="saved-links"> <h2> Saved Charities</h2>
+{% if len(user.following()) == 0 %}
+<div class="saved-links"> <h2>No Followed Charities</h2></div>
+{% end if %}
+{% if len(user.following()) %}
+{$ for charity in user.following() $}
+      <div class="saved-links"> <h2>Followed Charities</h2>
         <ul class="links-list">
-            <li><a href="https://www.vinnies.org.au/donate?gclid=EAIaIQobChMIp8LR5N_R2AIVygorCh1A4wvOEAAYASAAEgIXUvD_BwE"> Vinnies </li>
-            <li><a href="https://www.my.salvationarmy.org.au/login?bm=722986945"> Salvation Army </li>
-            <li><a href="https://www.headspace.org.au/"> HeadSpace Australia </li>
-            <li><a href="https://www.worldvision.com.au/"> World Vision </li>
-            <li><a href="https://www.bcrf.org/?gclid=EAIaIQobChMIppS-mrfV2AIVhCQrCh2OFwbyEAAYASAAEgLQDvD_BwE"> Breast Cancer</li>
+            <p class = "profile_link"><a href="/charity_profile/{{charity._id}}/">{{charity._name}}</a></p>
        </ul>
       </div>
+{$ end for $}
+{% end if %}
     </section>
   </div>
   </body>
