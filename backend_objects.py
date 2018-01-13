@@ -180,6 +180,16 @@ class User:
             return True
         pass
 
+    def following(self):
+        '''
+        This function returns the number of charities that are being followed by the user.
+        No arguments are passed to this function."
+        '''
+        result = call_query("SELECT charity_id FROM charity_followers WHERE user_id = ?;",(self._id,))
+        charities = [Charity.get(row[0]) for row in result]
+        return charities
+            
+
     def hasDonated(self, charity: int): #NOT MVP
         '''
         if user has donated to charity:
@@ -343,6 +353,7 @@ if __name__ == "__main__":
     print('== User following Charity')
     u.follow(c._id)
     assert len(c.followers()) >= 0
+    assert len(u.following()) >= 0
     result = call_query("SELECT 1 FROM charity_followers WHERE (charity_id = ?) AND (user_id = ?);",(2, 1))
     print(result)
     assert len(result) > 0
@@ -373,6 +384,8 @@ if __name__ == "__main__":
     assert u._fname == "Mr Snail"
     u._fname = None
     u.update()
+
+    
     
 
 '''
