@@ -91,6 +91,25 @@ article {
 	margin: 15px;
 }
 
+.profile_link {
+	background-color: #6394e9;
+	padding: 20px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+.profile_link:hover {
+	background-color: #4d85e6;
+}
+
+.profile_link a:visited {
+	color: white;
+}
+
+.profile_link a:link {
+	color: white;
+}
+
 .white {
 	color: white;
 }
