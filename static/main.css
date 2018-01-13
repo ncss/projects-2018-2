@@ -32,6 +32,7 @@ h1 {
 	color: #ffde7e;
 	font-family: 'Comfortaa', cursive;
 	font-size: 100px;
+
 }
 h2 {
 	font-family: 'Lora', bold, serif;
@@ -91,21 +92,6 @@ article {
 	margin: 15px;
 }
 
-.profile_link {
-	background-color: #6394e9;
-	padding: 20px;
-	margin-bottom: 5px;
-	text-align: center;
-}
-
-.profile_link a:visited {
-	color: white;
-}
-
-.profile_link a:link {
-	color: white;
-}
-
 .white {
 	color: white;
 }
@@ -118,24 +104,8 @@ a {
 	font-size: 50px;
 }
 
-#leftarrow:link {
-	color: black;
-}
-
-#leftarrow:visited {
-	color: black;
-}
-
 #rightarrow {
 	font-size: 50px;
-}
-
-#rightarrow:link {
-	color: black;
-}
-
-#rightarrow:visited {
-	color: black;
 }
 
 .swipebox{
@@ -228,7 +198,9 @@ textarea {
 input {
 	font-size: 30px;
 }
-
-.createCharity {
-	text-align: center;
+ul{
+	font-family: 'Montserrat', sans-serif;
+	text-align: justify;
+	font-size: 20px;
+	margin:5px;
 }
