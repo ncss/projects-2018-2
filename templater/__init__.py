@@ -14,16 +14,18 @@ Syntax:
 
 STATEMENT:
     {{text}}
-    
+
     'text' will be evaluated in python with given context from DB
+
 IF STATEMENT:
-    {% if condition %}
+    {%if condition%}
     STUFF
     {%end if%}
 
-    STUFF will be run if 'conditon'is true
+    STUFF will be run if 'conditon' is true
+
 FOR LOOP
-    {$For item in list$}
+    {$for item in list$}
     STUFF
     {$end for$}
 
@@ -35,9 +37,8 @@ Template Team:
 Shovel "Constantine" Quazi
 Ollie "Starfyre"
 Ethan "Aquaman"
-Jackson "Superman" 
+Jackson "Superman"
 
-    
 """
 
 # Relative imports are hard...
@@ -47,6 +48,13 @@ except ImportError:
     from templater.node_parser import *
 
 def render(file,context):
-    '''Renders given html file'''
+    '''
+    Renders a given html file. Context is a dictionary of values to insert into
+    the template.
+
+    Example:
+        context = {'var1': value1, 'var2': value2}
+        text = templater.render('my_page.html', context)
+    '''
     with open(file) as f:
         return parse(f.read()).translate(context)
