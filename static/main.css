@@ -150,6 +150,21 @@ a {
 	color: white;
 }
 
+.home_link {
+	background-color: #6394e9;
+	padding: 20px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+.home_link a:visited {
+	color: white;
+}
+
+.home_link a:link {
+	color: white;
+}
+
 .swipebox{
 	display: grid;
 	grid-template-columns: 50% 50%;
