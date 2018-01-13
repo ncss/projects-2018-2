@@ -12,26 +12,30 @@
 <body>
 
   {~ include templates/header.html ~}
-  <section>
-    <p class="center">
 
-    <img src="{{charity._logo}}" class="icon" id = "charitylogo">
-    </p>
-    <p class="center">
-      <div class = "swipebox">
-        <div><a id = "leftarrow" href="/swipe/{{charity._id}}/left/"><i class="material-icons" style="font-size:80px;color:black">restore</i><br>Maybe<br>Later</a></div>
-        <div><a id = "rightarrow" href="/swipe/{{charity._id}}/right/"><i class="material-icons" style="font-size:80px;color:red">favorite</i><br>Follow<br>Now</a></div>
+  <section class = "displaybox">
+    <div>
+      <div class = "imgbox">
+        <p class="center">
+          <img src="{{charity._logo}}" class="icon" id = "charitylogo">
+        </p>
       </div>
-    </p>
-    </section>
+      <p class="center">
+        <div class = "swipebox">
+          <div><a id = "leftarrow" href="/swipe/{{charity._id}}/left/"><i class="material-icons" style="font-size:80px;color:black">restore</i><br>Maybe<br>Later</a></div>
+          <div><a id = "rightarrow" href="/swipe/{{charity._id}}/right/"><i class="material-icons" style="font-size:80px;color:red">favorite</i><br>Follow<br>Now</a></div>
+        </div>
+      </p>
+  </div>
+  </section>
 
   <section>
-  <h2>{{charity._name}}</h2>
-  <article>
-  <p>
-  {{charity._story}}
-  </p>
-  </article>
+    <h2>{{charity._name}}</h2>
+    <article>
+      <p>
+        {{charity._story}}
+      </p>
+    </article>
   </section>
   <script src = "/static/main.js">
 
