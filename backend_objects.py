@@ -240,20 +240,77 @@ class User:
 
 class Post:
 
-    def __init__(self, title: str, content: str, user: str):
-        self._title = title
-        self._content = content
-        self._user = user
-        self._uploadTime = getTime()
+    def __init__(self, charityID, postType: str, timestamp, contentText: str, contentImage: str, contentEventTime, contentEventLocation: str, dbID=None):
+        '''
+        Creates a new Post object
+        timestamp should be a datetime object (use "datetime.datetime.fromtimestamp(time.time()) to get the current time as a datetime object)
+        Event Time should also be a datetime object - use datetime.datetime(year, month, day, hour, minute, second)
+        Currently, postType should be "event" as that is the only supported event type
+        '''
+        self._id = dbID
+        self._charityID = charityID
+        self._postType = postType
+        self._timestamp = timestamp
+        self._contentText = contentText
+        self._contentImage = contentImage
+        self._contentEventTime = contentEventTime
+        self._contentEventLocation = contentEventLocation
 
-    def getPostContent(self):
-        return self._title, self._content, self._user, self._timestamp
+    def __str__(self):
+        return "POST OBJECT:( id:{} charityID:{} postType:{} timestamp:{} contentText[:10]:{} contentImage:{} contentEventTime:{} contentEventLocation:{}".format(self._id, self._charityID, self._postType, self._timestamp, self._contentText, self._contentImage, self._contentEventTime, self._contentEventLocation)
+
+    @staticmethod
+    def getID(ID):
+        '''
+        Get's a post object from given ID
+        '''
+        results = call_query("SELECT charity_id, post_type, timestamp, content_text, content_image, content_event_time, content_event_location FROM posts WHERE id = ?", (ID,))
+        if len(results) == 0:
+            raise IndexError('No charity exisits in the database with ID: ' + str(ID))
+        else:
+            results = results[0]
+        return Post(results[0], results[1], dbTimeFormatToDatetime(results[2]), results[3], results[4], dbTimeFormatToDatetime(results[5]), results[6], ID)
 
 
+    @staticmethod
+    def getCharityPosts(charityID):
+        '''
+        Get's a post object based on the ID from the owning charitiy's ID
+        '''
+        results = call_query("SELECT charity_id, post_type, timestamp, content_text, content_image, content_event_time, content_event_location, id FROM posts WHERE charity_id = ?", (charityID,))
+        return [Post(result[0], result[1], dbTimeFormatToDatetime(result[2]), result[3], result[4], dbTimeFormatToDatetime(result[5]), result[6], result[7]) for result in results]
 
-def getTime() -> tuple:
+    def update(self):
+        '''
+        Pushes any changes made to the post object into the database
+        '''
+        if self._id is None:
+            raise NameError("Post's _id is None. Post must have an ID (referring to the relevant database Post entry) in order to have it's database values updated. If this is a new Post, use Post.save();")
+        call_query("UPDATE posts SET post_type = ?, timestamp = ?, content_text = ?, content_image = ?, content_event_time = ?, content_event_location = ? WHERE id = ?;", (self._postType, datetimeToDBTimeFormat(self._timestamp), self._contentText, self._contentImage, datetimeToDBTimeFormat(self._contentEventTime), self._contentEventLocation, self._id))
 
-    ts = time.time()
+
+    def save(self):
+        '''
+        Puts a new post object into the database
+        Generates a new ID and puts it into self._dbID
+        '''
+        newpostid = call_query("SELECT MAX(id) FROM posts;")[0]
+        newpostid = newpostid[0]+1 if newpostid[0] is not None else 0
+        call_query("INSERT INTO posts(id, charity_id, post_type, timestamp, content_text, content_image, content_event_time, content_event_location) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", (newpostid, self._charityID, self._postType, datetimeToDBTimeFormat(self._timestamp), self._contentText, self._contentImage, datetimeToDBTimeFormat(self._contentEventTime), self._contentEventLocation))
+        self._id = newpostid
+
+    def delete(self):
+        '''
+        Deletes a charity from the database
+        '''
+        call_query("DELETE FROM posts WHERE id = ?", (self._id,))
+        self._id = None
+
+def getTime(timeToUse=None) -> tuple:
+    if timeToUse is None:
+        ts = time.time()
+    else:
+        ts = timeToUse
 
     '''
     This block finds the appropriate suffix based on the digits in the number
@@ -300,6 +357,21 @@ def getTime() -> tuple:
     elif int(formattedClock[0]) < 12:
         clock = ':'.join(formattedClock) + ' am'
     return (date, clock,)
+
+def datetimeToDBTimeFormat(datetimeObject):
+    '''
+    Converts a datetime.datetime object into a simple form to be sent into a database.
+    Ignores microseconds.
+    '''
+    return "{},{},{},{},{},{}".format(datetimeObject.year, datetimeObject.month, datetimeObject.day, datetimeObject.hour, datetimeObject.minute, datetimeObject.second)
+
+def dbTimeFormatToDatetime(dbTimeFormat):
+    '''
+    Converts a compact str representation of the time back into a datetime.datetime object
+    Expects formatting given by datetimeToDBTimeFormat (i.e. "year,month,day,hour,minute,second")
+    '''
+    timeSplit = dbTimeFormat.split(",")
+    return datetime.datetime(int(timeSplit[0]), int(timeSplit[1]), int(timeSplit[2]), int(timeSplit[3]), int(timeSplit[4]), int(timeSplit[5]))
 
 def getRandomCharity():
     #print(charities)
@@ -384,6 +456,25 @@ if __name__ == "__main__":
     assert u._fname == "Mr Snail"
     u._fname = None
     u.update()
+
+    #Post tests
+    print('==Getting Charity 4\'s posts')
+    posts = Post.getCharityPosts(4)
+    assert len(posts) == 2
+    testPost = posts[0]
+    assert testPost._id == 2
+    assert testPost._contentImage == "https://www.oxfam.org.au/wp-content/uploads/2016/11/81588scr-1-700x450.jpg"
+    testPost._contentEventLocation = "Test Location"
+    testPost.update()
+    testPost = Post.getID(2)
+    assert testPost._contentEventLocation == "Test Location"
+    testPost._contentEventLocation = "Greater Sydney Area (Hawkesbury-Harbour)"
+    testPost.update()
+    newPost = Post(4, 'event', datetime.datetime.fromtimestamp(time.time()), "Test Post Creation", "http://testsite.com/static/testImage.jpg", datetime.datetime(2018, 1, 1, 3, 0, 0), 'Test Location')
+    newPost.save()
+    newPost = Post.getID(4)
+    assert newPost._contentEventLocation == 'Test Location'
+    newPost.delete()
 
     
     

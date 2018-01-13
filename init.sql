@@ -36,6 +36,19 @@ CREATE TABLE friends (
   PRIMARY KEY (user_id1, user_id2)
 );
 
+CREATE TABLE posts (
+  id INTEGER NOT NULL,
+  charity_id INTEGER NOT NULL,
+  post_type TEXT NOT NULL,
+  timestamp TEXT NOT NULL,
+  content_text TEXT NOT NULL,
+  content_image TEXT,
+  content_event_time TEXT,
+  content_event_location TEXT,
+  FOREIGN KEY (charity_id) REFERENCES charity (id),
+  PRIMARY KEY (id)
+);
+
 
 /* EXAMPLE DATA */
 INSERT INTO users(id,username,pword,email) VALUES (0, 'foo', 'bar', 'baz@snailmail.com');
@@ -56,3 +69,9 @@ We support them in being better prepared to cope with shocks and uncertainties a
 INSERT INTO charity(id,name,story,charity_website_url,image_src) VALUES (5, "Variety - the Children's Charity", 'All children should be able to follow their dreams and be the best they can be. No matter what life throws at them. No matter what their ability.
 
 Each year, thousands of children who are sick, disadvantaged or have special needs, get support from Variety the Children’s Charity when they need it most.','https://www.variety.org.au/vic/','https://i.vimeocdn.com/portrait/1371430_640x640');
+
+/* POSTS example data */
+INSERT INTO posts(id, charity_id, post_type, timestamp, content_text, content_image, content_event_time, content_event_location) VALUES (0, 2, 'event', '2018,1,12,1,48', 'Come help volunteer at our Bubble Tea Drive for Shelless Snails', 'https://i2.wp.com/blog.numitea.com/wp-content/uploads/2017/03/Chai-Bubble-Tea-prepared.jpg?resize=1000%2C820', '2018,1,14,6,30,0', 'Intergalactic Snail Centre');
+INSERT INTO posts(id, charity_id, post_type, timestamp, content_text, content_image, content_event_time, content_event_location) VALUES (1, 0, 'event', '2018,1,10,2,54', 'Help setup our example charity event!', 'http://4.bp.blogspot.com/-bGl3TyNbxj8/TWV6okw-3SI/AAAAAAAAAAg/FvdOHVZpXR4/s1600/UNRWA_Gaza5.jpg', '2018,5,3,13,13,13', 'OLPC fundraiser centre');
+INSERT INTO posts(id, charity_id, post_type, timestamp, content_text, content_image, content_event_time, content_event_location) VALUES (2, 4, 'event', '2017,12,30,10,30,0', 'Oxfam Trailwalker Sydney is one the world''s greatest challenge. In Sydney, teams of four will walk from Hawkesbury to the Harbour.', 'https://www.oxfam.org.au/wp-content/uploads/2016/11/81588scr-1-700x450.jpg', '2018,7,25,6,0,0', 'Greater Sydney Area (Hawkesbury-Harbour)');
+INSERT INTO posts(id, charity_id, post_type, timestamp, content_text, content_image, content_event_time, content_event_location) VALUES (3, 4, 'event', '2018,1,3,15,45,0', 'City2Surf: Be a part of the world''s largest Fun Run! With every step, you''ll be supporting people like Jackline who have been forced to live their life on the run.', 'https://www.oxfam.org.au/wp-content/uploads/2017/05/97642scr-700x450.jpg', '2018,8,13,8,0,0', 'Sydney CBD: Hyde Park');

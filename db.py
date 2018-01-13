@@ -8,7 +8,7 @@ else:
     conn = sqlite3.connect('database.db')
     conn.executescript(open('init.sql').read()) # read from file if the database does not exist
 
-def call_query(query, args):
+def call_query(query, args=None):
     '''
     Takes a sql query and arguments to insert into said query, returning the result.
     Usage: 'query' is a line (or multiple) of sql code. Substitute args as '?' into the query. 
@@ -16,7 +16,10 @@ def call_query(query, args):
     E.g. call_query('SELECT * FROM people WHERE fname = ?',('Barry',))
     '''
     db = conn.cursor()
-    db.execute(query, args)
+    if args is None:
+        db.execute(query)
+    else:
+        db.execute(query, args)
     results = db.fetchall()
     conn.commit()
     db.close()
