@@ -33,7 +33,7 @@ def tokenise(text):
   >>> tokenise('{% if f.has_nickname() %} ({{ f.nickname }}) {% end if %}')
   ['', '{% if f.has_nickname() %}', ' (', '{{ f.nickname }}', ') ', '{% end if %}', '']
   """
-  return re.split(r'({{.+?}}|{%.+?%}|{\$.+?\$})', text) ##
+  return re.split(r'({{.+?}}|{%.+?%}|{\$.+?\$}|{~.+?~})', text) ##
 
 END_IF_TAG = r'^{%\s*end if\s*%}$'
 END_FOR_TAG = r'^{\$\s*end for\s*\$}$'
