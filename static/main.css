@@ -108,6 +108,21 @@ a {
 	font-size: 50px;
 }
 
+.profile_link {
+	background-color: #6394e9;
+	padding: 20px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+.profile_link a:visited {
+	color: white;
+}
+
+.profile_link a:link {
+	color: white;
+}
+
 .swipebox{
 	display: grid;
 	grid-template-columns: 50% 50%;
