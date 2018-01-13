@@ -35,7 +35,15 @@ h2 {
 	font-family: 'Lora', bold, serif;
 	font-size: 40px;
 }
-
+.white{
+	margin: 0;
+	margin-bottom: 15px;
+	margin-right: 20px;
+	color: #ffde7e;
+	text-align: center;
+	font-family: 'Comfortaa', cursive;
+	font-size: 50px;
+}
 section {
 	background-color: lightblue;
 	display:inline-grid;
