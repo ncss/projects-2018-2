@@ -1,4 +1,4 @@
-# Tinder for Charities
+# EQUALIBRIUM, Swipe for Good
 ## Group 2
 
 Team members:
