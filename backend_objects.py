@@ -88,6 +88,7 @@ class Charity:
         ''' something goes here'''
         some_variable = Post(title, content, self._name)
 
+    def followers(self):
         data = call_query("""
                 SELECT user_id FROM charity_followers WHERE ? = charity_id
                 """,(self._id,))
