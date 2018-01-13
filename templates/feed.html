@@ -12,7 +12,7 @@
   <body>
 
     {~ include templates/header.html ~}
-    <h3>Charity Newsfeed</h3>
+    <h3 class = "center" >Charity Newsfeed</h3>
 
 	{$ for post in Post.getAllPosts() $}
     <div class="grid-container">
@@ -27,8 +27,8 @@
       </div>
     </div>
 	{$ end for $}
-	
-	
+
+
 
   </body>
 </html>

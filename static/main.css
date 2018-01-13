@@ -48,7 +48,7 @@ h2.page {
 	margin: 0;
 	margin-bottom: 15px;
 	margin-right: 20px;
-	color: #ffde7e;
+	color: white;
 	text-align: center;
 	font-family: 'Comfortaa', cursive;
 	font-size: 40px;
@@ -94,9 +94,7 @@ article {
 	margin: 15px;
 }
 
-.white {
-	color: white;
-}
+
 
 a {
 	text-decoration: none;
