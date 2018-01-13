@@ -34,7 +34,7 @@ def post_create_profile_handler(request, charity_name, charity_logo):
     request.write("You have added a Charity with this name " + charity_name + " and logo " + charity_logo)
 
 def feed_handler(request):
-    request.write(get_template("feed.html"))
+    request.write(get_template("templates/feed.html"))
 
 def swipe_screen_handler(request, charity_profile_id, swipe_direction):
     #request.write("You swiped " + swipe_direction + " for the Charity " + charity_profile_id)
@@ -44,7 +44,8 @@ def swipe_screen_handler(request, charity_profile_id, swipe_direction):
         user.follow(charity_profile_id)
         pass#numfollowed = numfollowed + 1
     home_page_handler(request)
-
+def user_handler(request):
+    request.write("Logged|Not logged in.")
 
 def about_handler(request):
     request.write(get_template("about.html"))
@@ -62,7 +63,6 @@ def default_handler(request, method):
 # \d+ is any number
 # .+ = any letter but preferably a name!!
 
-
 server = Server()
 server.register(r"/?", home_page_handler)
 server.register(r"/charity_profile/(\d+)/?", charity_profile_handler)
@@ -72,5 +72,6 @@ server.register(r"/swipe/(\d+)/(left|right)/?", swipe_screen_handler)
 server.register(r"/feed/?", feed_handler)
 server.register(r"/about/?", about_handler)
 server.register(r"/user_profile/(\d+)/(.+)/?", user_profile_handler)
+server.register(r"/user/?", user_handler)
 server.set_default_handler(default_handler)
 server.run()

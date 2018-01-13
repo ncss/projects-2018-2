@@ -118,14 +118,14 @@ class Parser():
     else:
       return None
 
-    def parse_include(self):
-      someVariable = re.match(INCLUDE_TAG, self.peek())
-      if someVariable:
-        text = someVariable.group(1)
-        self.next()
-        return(nodes.IncludeNode(text))
-      else:
-        return None
+  def parse_include(self):
+    someVariable = re.match(INCLUDE_TAG, self.peek())
+    if someVariable:
+      text = someVariable.group(1)
+      self.next()
+      return(nodes.IncludeNode(text))
+    else:
+      return None
 
 
   
