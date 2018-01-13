@@ -4,7 +4,7 @@ rightarrow.addEventListener("click", (ev) => {
   setTimeout(() => {
     charitylogo.classList.remove("swipe_image_left");
     window.location.replace("/");
-  }, 1000);
+  }, 100);
   return false;
 });
 
@@ -14,7 +14,7 @@ leftarrow.addEventListener("click", (ev) => {
   setTimeout(() => {
     charitylogo.classList.remove("swipe_image_right");
     window.location.replace("/");
-  }, 1000);
+  }, 100);
   return false;
 });
 
@@ -24,58 +24,65 @@ let click = false;
 charitylogo.draggable = false;
 charitylogo.addEventListener("pointerdown", (ev) =>  {
 	startPosition = ev.screenX;
+
 	click = true;
-	console.log('pdown');
 })
 
+function swipeFinish(delta) {
+	console.log(delta)
+	if (delta > 150) {
+		rightarrow.click();
+	} else if (delta < -250 ) {
+				leftarrow.click();
+
+	}
+
+}
+
 charitylogo.addEventListener("pointerup", (ev) =>  {
+	let delta = ev.screenX - startPosition;
+	swipeFinish(delta);
 	startPosition = null;
 	charitylogo.style.transform = null;
 	click = false;
-	console.log('pup');
-})
+
+	
+	})
 
 document.body.addEventListener("pointerleave", (ev) =>  {
 	if (ev.pointerType != "touch") {
 	startPosition = null;
 	charitylogo.style.transform = null;
 	click = false;
-	console.log(ev);
-	console.log('pleave');
 	}
 })
 
 document.body.addEventListener("touchend", (ev) => {
+	let delta = ev.changedTouches[0].screenX - startPosition;
+	swipeFinish(delta);
+
 		startPosition = null;
 	charitylogo.style.transform = null;
 	click = false;
-	console.log('pup');
 
 	
 	
 })
 
 charitylogo.addEventListener("pointermove", (ev) =>  {
-	// Needed (brackets) around your if condition and needed to set startPosition to null
+	// Needed (brackets) around your if condition and needed to set startPosition to null
 	if (click == true) {
-		console.log(startPosition);
 		let delta = ev.screenX - startPosition;
-		console.log(ev.screenX);
 		let rotation = delta * 0.0174;
 		charitylogo.style.transform = `rotate(${rotation}deg) translate(${delta}px)`;
-		console.log(`rotate(${rotation}deg) translate(${delta}px)`);
 	}
 });
 
 charitylogo.addEventListener("touchmove", (ev) =>  {
 	// Needed (brackets) around your if condition and needed to set startPosition to null
 	if (click == true) {
-		console.log(ev);
-		console.log(startPosition);
 		let delta = ev.touches[0].screenX - startPosition;
-		console.log(ev.touches[0].screenX);
 		let rotation = delta * 0.0174;
 		charitylogo.style.transform = `rotate(${rotation}deg) translate(${delta}px)`;
-		console.log(`rotate(${rotation}deg) translate(${delta}px)`);
 	}
 });
