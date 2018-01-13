@@ -5,40 +5,45 @@
 <title>Home</title>
 <link href="/static/main.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Comfortaa|Lora|Montserrat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
-
 <body>
-<header>
-<h1>Chinder<a><img src="/static/images/HAM.png" class="hamburger"></a></h1>
-<p class="white">name still work in progress 0-0</p>
-<!--
-<nav>
-<l1> hamburger
-<ul>
-<l1> <a href=
+  <header>
+    <div class="row">
+      <h1 class="chinder-title">Chinder</h1>
+      <a class="main-menu" href="#nav-menu-items"><i class="material-icons">menu</i> </a>
+    </div>
+    <p class="white">name still work in progress 0-0</p>
+  </header>
 
+  <nav id="nav-menu-items">
+    <a href= "#"><i class="material-icons">close</i></a>
+     <a href= "/swipe/1/(left|right)/">Home</a>
+     <a href= "/feed/">Feed</a>
+     <a href= "/create_charity_profile/">Create A Charity</a>
+     <a href= "/charity_profile/1/">Charity</a>
+     <a href= "/user_profile/1/snail/">Profile</a>
+     <a href= "/about/">About</a>
+  </nav>
 
+  <section>
+    <p class="center">
+      <img src="https://static.groklearning-cdn.com/static/images/marketing/about/james-2017-07@2x.png" class="icon">
+    </p>
+    <p class="center">
+      <a href="404.html">&#8592;</a>
+      <a href="404.html">&#8594;</a>
+    </p>
+  </section>
 
-</nav>-->
-</header>
-
-<section>
-<p class="center">
-<img src="https://static.groklearning-cdn.com/static/images/marketing/about/james-2017-07@2x.png" class="icon">
-</p>
-<p class="center">
-<a href="404.html">&#8592;</a>
-<a href="404.html">&#8594;</a>
-</p>
-</section>
-
-<section>
-<h2>{{charity._name}}</h2>
-<article>
-<p>
-{{charity._story}}
-</p>
-</article>
-</section>
+  <section>
+    <h2>{{charity._name}}</h2>
+    <article>
+    <p>
+    {{charity._story}}
+    </p>
+    </article>
+  </section>
 </body>
 </html>

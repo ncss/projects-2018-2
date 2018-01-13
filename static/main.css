@@ -12,10 +12,7 @@ body {
 	border-left: 2px blue solid;
 	border-bottom-left-radius: 10px;
 	margin: 0;
-}
-
-.hamburger:hover {
-	background: blue;
+	display: inline-block;
 }
 
 header {
@@ -86,4 +83,46 @@ article {
 
 a {
 	text-decoration: none;
+}
+
+.chinder-title {
+	display: inline-block;
+}
+#charity_name{
+	font-size: 100px;
+}
+
+.main-menu .material-icons {
+    font-size: 100px !important;
+    float: right !important;
+		background : #1F64DD;
+}
+
+
+#nav-menu-items {
+	display : block;
+	background : grey;
+	position:fixed;
+	bottom: 0px;
+	left: 100%;
+	width: 50%;
+	height: 100%;
+  transition: left 0.3s ease;
+	margin-left: 500px;
+}
+#nav-menu-items:target {
+	display:block;
+	left: 0%;
+
+
+}
+#nav-menu-items a {
+	display:block;
+	font-size:50px;
+	color: white;
+	padding:50px ;
+
+}
+#nav-menu-items i {
+	font-size: 50px;
 }
