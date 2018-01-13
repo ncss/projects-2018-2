@@ -37,7 +37,7 @@ def tokenise(text):
 
 END_IF_TAG = r'^{%\s*end if\s*%}$'
 END_FOR_TAG = r'^{\$\s*end for\s*\$}$'
-INCLUDE_TAG = r'^{~\s*include (.+)\s*~}$'
+INCLUDE_TAG = r'^{~\s*include\s+(.+?)\s*~}$'
 EXPRESSION_TAG = r'^{{\s*(.+)\s*}}$'
 
 class Parser():
