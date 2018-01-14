@@ -3,6 +3,11 @@ import backend_objects
 import templater
 from tornado.ncss import Server, ncssbook_log
 
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--port', type=int, default=8888, required=False)
+
 TEMPLATE_DIR = "templates"
 aux = 0
 def get_template(filename):
@@ -108,7 +113,8 @@ def default_handler(request, method):
 # \d+ is any number
 # .+ = any letter but preferably a name!!
 
-server = Server()
+args = parser.parse_args()
+server = Server(port=args.port)
 server.register(r"/?", home_page_handler)
 server.register(r"/charity_profile/(\d+)/?", charity_profile_handler)
 server.register(r"/create_charity_profile/?", create_charity_profile_handler)
