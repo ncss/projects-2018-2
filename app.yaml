@@ -1,0 +1,9 @@
+env: flex
+runtime: python
+api_version: 1
+threadsafe: false
+
+runtime_config:
+  python_version: 3
+
+entrypoint: python3 app.py --port $PORT
