@@ -19,3 +19,5 @@ Team members:
 * Ella (aka Posion Ivy)
 * Julia (aka Batman)
 * Karina
+
+The past 10 days have been a blast! Thanks to everyone for such an amazing time! -Thomas Smith
