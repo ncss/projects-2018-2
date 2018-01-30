@@ -1,0 +1,40 @@
+<!-- Template file for html created by Sara -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Lora|Montserrat" rel="stylesheet">
+    <link href="/static/main.css" rel="stylesheet">
+    <!--<link href="/static/user.css" rel="stylesheet">-->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+  </head>
+  <body>
+
+      {~ include templates/header.html ~}
+      <h2 class="page yellow">User Profile</h2>
+  <div class= "wrapper">
+    <section>
+      <div class="user-image"> <i class="material-icons account_circle_profile">account_circle</i> </div>
+      <div class= "user-info"> 
+        <h2>Name : {{user._username}}</h2> 
+        <h2>Email : {{user._email}}</h2>
+      </div>
+    </section>
+
+    <section>
+{% if len(user.following()) == 0 %}
+<div class="saved-links"> <h2>No Followed Charities</h2></div>
+{% end if %}
+{% if len(user.following()) %}
+      <div class="saved-links"> <h2>Followed Charities</h2>
+        <ul class="links-list">
+{$ for charity in user.following() $}
+            <li class = "profile_link"><a href="/charity_profile/{{charity._id}}/">{{charity._name}}</a></li>
+{$ end for $}
+       </ul>
+      </div>
+{% end if %}
+    </section>
+  </div>
+  </body>
+</html>

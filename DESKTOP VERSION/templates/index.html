@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Home</title>
+<link href="/static/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Comfortaa|Lora|Montserrat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+</head>
+<body>
+
+  {~ include templates/header.html ~}
+
+  <section class = "displaybox">
+    <div>
+      <div class = "imgbox">
+        <p class="center">
+          <img src="{{charity._logo}}" class="icon" id = "charitylogo">
+        </p>
+      </div>
+      <p class="center">
+        <div class = "swipebox">
+          <div><a id = "leftarrow" href="/swipe/{{charity._id}}/left/"><i class="material-icons" style="font-size:80px;color:black">restore</i><br>Maybe<br>Later</a></div>
+          <div><a id = "rightarrow" href="/swipe/{{charity._id}}/right/"><i class="material-icons" style="font-size:80px;color:red">favorite</i><br>Follow<br>Now</a></div>
+        </div>
+      </p>
+  </div>
+  </section>
+
+  <section>
+    <h2>{{charity._name}}</h2>
+    <article>
+      <p>
+        {{charity._story}}
+      </p>
+    </article>
+    <article>
+      <p class = "profile_link"><a href="/charity_profile/{{charity._id}}/">Charity profile</a></p>
+    </article>
+  </section>
+  <script src = "/static/main.js">
+
+  </script>
+</body>
+</html>

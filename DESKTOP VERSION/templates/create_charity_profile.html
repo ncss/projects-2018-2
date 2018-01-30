@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Home</title>
+<link href="/static/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Comfortaa|Lora|Montserrat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+  {~ include templates/header.html ~}
+<section>
+<h2>Create new charity</h2>
+<form class="createCharity" action="/post_create_charity_profile" method = "POST">
+<input id="new_name" type="text" name = "new_name" placeholder="Enter name of charity"></input>
+<br>
+<!-- <p><strong>Upload charity photo</strong><button>UPLOAD</button> <img id="uploaded_image" src="/static/images/preview.png"></p> -->
+<input id="logo_name" type="text" class = "input" name = "logo_name" placeholder="Enter link to your Logo"></input>
+<br>
+<textarea id="new_bio" type="text" name ="new_bio" placeholder="Enter charity Bio (205 word limit)"></textarea>
+<br>
+<center><button type="submit" class="SUBMIT_BUTTON">SUBMIT</button></center>
+</form>
+</section>
+</body>
+</html>

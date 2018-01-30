@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Lora|Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <!--<link href="/static/feed.css" rel="stylesheet">-->
+    <link href="/static/main.css" rel="stylesheet">
+    
+    <title>Feed Page</title>
+  </head>
+  <body>
+
+    {~ include templates/header.html ~}
+    
+    <h3 class = "center" >Charity Newsfeed</h3>
+	{$ for post in Post.getAllPosts() $}
+
+    <div class="grid-container">
+      <div class="container">
+        <div class="profilepic">
+          <img src = " {{ Charity.get(post._charityID)._logo }}">
+        </div>
+        <div class="profilename">
+          <h2>{{ Charity.get(post._charityID)._name }}</h2>
+        </div>
+      </div>
+      <div class="post">
+        <p class="postcontent">{{ post._contentText }}<p>
+      </div>
+    </div>
+	{$ end for $}
+
+
+
+  </body>
+</html>
